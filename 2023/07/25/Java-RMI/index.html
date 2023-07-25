@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="P3ngu1nW">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/07/25/java-rmi/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="Java-RMIIntroductionRMI is Remote Method Invocation, which offers a remote interface as Java’s RPC framework to the application. ProcedureThe procedure can be represented as the following graph.   Cod">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java RMI">
+<meta property="og:url" content="http://example.com/2023/07/25/Java-RMI/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Java-RMIIntroductionRMI is Remote Method Invocation, which offers a remote interface as Java’s RPC framework to the application. ProcedureThe procedure can be represented as the following graph.   Cod">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725214559548.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725151305509.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725152250350.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725152426437.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725152736479.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725153520233.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725153014782.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725153904441.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725154045242.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725160827645.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725161307946.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725161419927.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725161752767.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725161939350.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725162312655.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725163213092.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725172347106.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725172621711.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725173616036.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725173700141.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725183512037.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725183846248.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725190510643.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725201609914.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725201645326.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725201741852.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725203157578.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725203233302.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725203244581.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725203253068.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725203607163.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725204411479.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725205501306.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725205730837.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725210630202.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725210839708.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725211038114.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725211205647.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725212228180.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725213020333.png">
+<meta property="og:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725213044448.png">
+<meta property="article:published_time" content="2023-07-25T05:47:27.000Z">
+<meta property="article:modified_time" content="2023-07-25T13:46:00.674Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/07/25/Java-RMI/image-20230725214559548.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            Java RMI -
+        
+        P3ngu1nW
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<link rel="stylesheet" href="/assets/fonts.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"en"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"busuanzi_counter":{"enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"pjax":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"P3ngu1nW","subtitle":{"text":["努力会说谎，但努力不会白费。"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/p3ngu1nw"}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.1.3","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="main-content-container">
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                P3ngu1nW
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        HOME
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer">
+        <ul class="drawer-navbar-list">
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                HOME
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
+
+            
+            
+                <div class="article-title">
+                    <h1 class="article-title-regular">Java RMI</h1>
+                </div>
+            
+                
+            
+
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="/images/profile.jpg">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">P3ngu1nW</span>
+                            
+                                <span class="author-label">Lv1</span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-07-25 13:47:27</span>
+        <span class="mobile">2023-07-25 13:47</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-07-25 21:46</span>
+            <span class="mobile">2023-07-25 21:46</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Java/">Java</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content markdown-body">
+                <h1 id="Java-RMI"><a href="#Java-RMI" class="headerlink" title="Java-RMI"></a>Java-RMI</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>RMI is Remote Method Invocation, which offers a remote interface as Java’s RPC framework to the application.</p>
+<h2 id="Procedure"><a href="#Procedure" class="headerlink" title="Procedure"></a>Procedure</h2><p>The procedure can be represented as the following graph.</p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725214559548.png" class title="image-20230725214559548">
+
+<h2 id="Code-Analysing"><a href="#Code-Analysing" class="headerlink" title="Code Analysing"></a>Code Analysing</h2><h3 id="DEMO"><a href="#DEMO" class="headerlink" title="DEMO"></a>DEMO</h3><p>First, let’s write a RMI demo.</p>
+<p>The java env is jdk8u65</p>
+<h4 id="Server"><a href="#Server" class="headerlink" title="Server"></a>Server</h4><div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//RemoteObj</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">RemoteObj</span> <span class="keyword">extends</span> <span class="title class_">Remote</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">sayHello</span><span class="params">(String Keywords)</span> <span class="keyword">throws</span> RemoteException;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//RemoteObjImpl</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RemoteObjImpl</span> <span class="keyword">extends</span> <span class="title class_">UnicastRemoteObject</span> <span class="keyword">implements</span> <span class="title class_">RemoteObj</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">RemoteObjImpl</span><span class="params">()</span> <span class="keyword">throws</span> RemoteException &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">sayHello</span><span class="params">(String Keywords)</span><span class="keyword">throws</span> RemoteException &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">upKeywords</span> <span class="operator">=</span> Keywords.toUpperCase();</span><br><span class="line">        System.out.println(upKeywords);</span><br><span class="line">        <span class="keyword">return</span> upKeywords;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//RemoteServer</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RemoteServer</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] argc)</span> <span class="keyword">throws</span> RemoteException, AlreadyBoundException &#123;</span><br><span class="line">        <span class="type">RemoteObj</span> <span class="variable">remoteObj</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RemoteObjImpl</span>();</span><br><span class="line">        <span class="type">Registry</span> <span class="variable">registry</span> <span class="operator">=</span> LocateRegistry.createRegistry(<span class="number">1099</span>);</span><br><span class="line">        registry.bind(<span class="string">&quot;remoteObj&quot;</span>, remoteObj);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="Client"><a href="#Client" class="headerlink" title="Client"></a>Client</h4><div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//RMIClient</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RMIClient</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] argc)</span> <span class="keyword">throws</span> RemoteException, NotBoundException &#123;</span><br><span class="line">        <span class="type">Registry</span> <span class="variable">registry</span> <span class="operator">=</span> LocateRegistry.getRegistry(<span class="string">&quot;127.0.0.1&quot;</span>, <span class="number">1099</span>);</span><br><span class="line">        <span class="type">RemoteObj</span> <span class="variable">remoteObj</span> <span class="operator">=</span> (RemoteObj) registry.lookup(<span class="string">&quot;remoteObj&quot;</span>);</span><br><span class="line">        System.out.println(remoteObj.sayHello(<span class="string">&quot;Let&#x27;s go!&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="Create-a-RemoteObj"><a href="#Create-a-RemoteObj" class="headerlink" title="Create a RemoteObj"></a>Create a RemoteObj</h3><div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">RemoteObj</span> <span class="variable">remoteObj</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RemoteObjImpl</span>();</span><br></pre></td></tr></table></figure></div>
+
+<p>It seems a simple instantiation, but remember that we have extended the <code>UnicastRemoteObject</code>.</p>
+<p>So let’s see what happened inside.</p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725151305509.png" class title="image-20230725151305509">
+
+<p>Firstly, we come into the <code>UnicastRemoteObject#exportObject</code>.</p>
+<p>We can see this method published a <code>Remote</code> obj on the server(port: 0 means a random port).</p>
+<p>Here, the <code>UnicastServerRef</code> encapsulates various network information.</p>
+<p>From my opinion, <code>UnicastServerRef</code> is something to deal with the stub while <code>LiveRef</code> is to deal with the Internet.</p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725152250350.png" class title="image-20230725152250350">
+
+<p>Then, our object will be encapsulated into the <code>UnicastServerRef</code> too.</p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725152426437.png" class title="image-20230725152426437">
+
+<p>Then, <code>UnicastServerRef</code> create a stub for the Object, and encapsulates the <code>impl</code> and <code>stub</code> and something into a whole <code>Target</code></p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725152736479.png" class title="image-20230725152736479">
+
+<p>Then follows another exportObject.</p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725153520233.png" class title="image-20230725153520233">
+
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725153014782.png" class title="image-20230725153014782">
+
+<p>Finally, the server will listen to the port and handle the requests.</p>
+<p>At last, there is a another <code>exportObject</code></p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725153904441.png" class title="image-20230725153904441">
+
+<p>Let’s see what’s in the <code>ObjectTable.putTarget</code></p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725154045242.png" class title="image-20230725154045242">
+
+<p>The target will finally be put into the <code>objTable</code> and <code>implTable</code></p>
+<p>That means we can lookup the target by <code>ObjectEndpoint</code> or <code>Implementation</code></p>
+<h3 id="Register-the-RemoteObj"><a href="#Register-the-RemoteObj" class="headerlink" title="Register the RemoteObj"></a>Register the RemoteObj</h3><p>Actually, the <code>Target</code> has a random port, which is unfriendly to the client.</p>
+<p>So we can create a registry on a specific port and bind the RemoteObj.</p>
+<h4 id="Create-a-Registry"><a href="#Create-a-Registry" class="headerlink" title="Create a Registry"></a>Create a Registry</h4><p>First, let’s see how to create a registry.</p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725160827645.png" class title="image-20230725160827645">
+
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725161307946.png" class title="image-20230725161307946">
+
+<p>First we create a <code>LiveRef</code> encapsulated with the network information.</p>
+<p>Then we encapsulate the <code>LiveRef</code> into the <code>UnicastServerRef</code> and call the <code>setup</code> method.</p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725161419927.png" class title="image-20230725161419927">
+
+<p>where call the <code>UnicastServerRef#exportObject</code> again.</p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725161752767.png" class title="image-20230725161752767">
+
+<p>But this time, we enter into the <code>setSkeleton</code></p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725161939350.png" class title="image-20230725161939350">
+
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725162312655.png" class title="image-20230725162312655">
+
+<p>Here we use reflection to create <code>RegistryImpl_Skel</code>, which implements every operation in register.</p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725163213092.png" class title="image-20230725163213092">
+
+<p>and finally, the stub will be encapsulated as a <code>Target</code> and exported.</p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725172347106.png" class title="image-20230725172347106">
+
+<p>But there are three stuff in the objTable.</p>
+<p>Two are what we created, the other is DGC, distributed garbage-collection</p>
+<h4 id="bind"><a href="#bind" class="headerlink" title="bind"></a>bind</h4><img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725172621711.png" class title="image-20230725172621711">
+
+<p>It’s very easy, just put the name and RemoteObj into the Hashtable.</p>
+<h3 id="Visit-Registry-to-fetch-the-RemoteObj"><a href="#Visit-Registry-to-fetch-the-RemoteObj" class="headerlink" title="Visit Registry to fetch the RemoteObj"></a>Visit Registry to fetch the RemoteObj</h3><h4 id="From-Client-View"><a href="#From-Client-View" class="headerlink" title="From Client View"></a>From Client View</h4><p>What happened when the client try to connect the registry.</p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725173616036.png" class title="image-20230725173616036">
+
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725173700141.png" class title="image-20230725173700141">
+
+<p>Finally, we can find we create a proxy of the Registry.</p>
+<p>Then let’s check about the <code>registry.lookup</code></p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725183512037.png" class title="image-20230725183512037">
+
+<p>Here, <strong>we get the Registry’s dynamic proxy Stub</strong>, and deserialize the return value.</p>
+<p>In this decompiled file, we can’t make breakpoint, but we can still follow the program.</p>
+<p>Follow the <code>invoke() —&gt; call.executeCall()</code></p>
+<p>We can find a deserialize code here.</p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725183846248.png" class title="image-20230725183846248">
+
+<p>That means, if the registry returns a a malicious class, it is possible to create a <strong>hidden</strong> deserialization vulnerability on the client.</p>
+<p>And once the client call the <code>invoke</code>, it may cause the vulnerability.</p>
+<h4 id="From-Registry-View"><a href="#From-Registry-View" class="headerlink" title="From Registry View"></a>From Registry View</h4><p>make a breakpoint in <code>Transport#serviceCall</code></p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725190510643.png" class title="image-20230725190510643">
+
+<p>We can see the Registry receives a stub, which includes a ref.</p>
+<p>Then the <code>skel</code> will be put into the <code>disp</code> and call <code>disp.dispatch()</code></p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725201609914.png" class title="image-20230725201609914">
+
+<p>Then we go into the <code>oldDispatch</code></p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725201645326.png" class title="image-20230725201645326">
+
+<p>Following the <code>skel.dispatch()</code></p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725201741852.png" class title="image-20230725201741852">
+
+<p>op represents the client’s operation.</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">0-&gt;bind</span><br><span class="line">1-&gt;list</span><br><span class="line">2-&gt;lookup</span><br><span class="line">3-&gt;rebind</span><br><span class="line">4-&gt;unbind</span><br></pre></td></tr></table></figure></div>
+
+<p>So, in <code>RegistryImpl_Skel#dispatch</code>, there are some case code block, and some of them are vulnerable, which means the hacker can attack the registry from client.</p>
+<ul>
+<li><p>bind</p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725203157578.png" class title="image-20230725203157578">
+</li>
+<li><p>lookup</p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725203233302.png" class title="image-20230725203233302">
+</li>
+<li><p>rebind</p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725203244581.png" class title="image-20230725203244581">
+</li>
+<li><p>unbind</p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725203253068.png" class title="image-20230725203253068"></li>
+</ul>
+<p>In our <code>lookup</code> request, it will finally go into the <code>lookup</code> method, and get the <code>RemoteObj</code> from <code>bindings</code>, and return a serialization value.</p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725203607163.png" class title="image-20230725203607163">
+
+<h3 id="Call-Remote-Method"><a href="#Call-Remote-Method" class="headerlink" title="Call Remote Method"></a>Call Remote Method</h3><h4 id="From-Client-View-1"><a href="#From-Client-View-1" class="headerlink" title="From Client View"></a>From Client View</h4><p>We should remember that the remoteObj we received is a Proxy, so what happened when we called <code>remoteObj.sayHello</code> at the client side?</p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725204411479.png" class title="image-20230725204411479">
+
+<p>Following the code, we can find we finally called <code>UnicastRef#invoke</code> to call remote method.</p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725205501306.png" class title="image-20230725205501306">
+
+<p>Here we serialize our parameters, and call a dangerous method <code>call.executeCall()</code></p>
+<p>Besides, the <code>unmarkedshalValue</code> method here is also dangerous. Because it can <strong>Deserialize</strong> a malicious class.</p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725205730837.png" class title="image-20230725205730837">
+
+<h4 id="From-Server-View"><a href="#From-Server-View" class="headerlink" title="From Server View"></a>From Server View</h4><p>As the last section, we make a breakpoint in <code>Transport#serviceCall</code></p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725210630202.png" class title="image-20230725210630202">
+
+<p>Same as before, we go into the <code>UnicastServerRef#dispatch</code></p>
+<p>But this time, we will not call the <code>oldDispatch</code></p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725210839708.png" class title="image-20230725210839708">
+
+<p>And the method here is the <code>sayHello()</code></p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725211038114.png" class title="image-20230725211038114">
+
+<p>But next, we can see the <code>unmarshalValue</code> method here, which means there exists a deserialization vulnerability.</p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725211205647.png" class title="image-20230725211205647">
+
+<p>And finally, server will make a reflection call and pack the response.</p>
+<h3 id="DGC"><a href="#DGC" class="headerlink" title="DGC"></a>DGC</h3><p>DGC is an automatically created class to clean up memory.</p>
+<p>As we metioned in 3.3.1, we also put a <code>DGCImpl_Stub</code> into the <code>objTable</code></p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725212228180.png" class title="image-20230725212228180">
+
+<p>Like Registry at client side, we will also create a <code>DGCImpl_Stub</code></p>
+<p>However, there both exists Deserialization in <code>DGCImpl_Stub#dirty</code> and <code>DGCImpl_Skel#dispatch</code></p>
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725213020333.png" class title="image-20230725213020333">
+
+<img lazyload src="/images/loading.svg" data-src="/2023/07/25/Java-RMI/image-20230725213044448.png" class title="image-20230725213044448">
+
+<p>So it is also vulnerable.</p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>Let’s summarize the attack method we discussed before.</p>
+<p>More details will be discussed in my next blog.</p>
+<h3 id="Registry-attack-Client"><a href="#Registry-attack-Client" class="headerlink" title="Registry attack Client"></a>Registry attack Client</h3><p><code>RegistryImp_Stub#lockup</code></p>
+<p><code>StreamRemoteCall#executeCall</code></p>
+<h3 id="Server-attack-Client"><a href="#Server-attack-Client" class="headerlink" title="Server attack Client"></a>Server attack Client</h3><p><code>DGCImpl_Stub#dirty</code></p>
+<p><code>UnicastRef#invoke</code></p>
+<h3 id="Client-attack-Server"><a href="#Client-attack-Server" class="headerlink" title="Client attack Server"></a>Client attack Server</h3><p><code>UnicastServerRef#dispatch</code></p>
+<p><code>DGCImpl_Skel#dispatch</code></p>
+<h3 id="Client-attack-Registry"><a href="#Client-attack-Registry" class="headerlink" title="Client attack Registry"></a>Client attack Registry</h3><p><code>RegistryImp_Skel#dispatch</code></p>
+
+            </div>
+
+            
+                <div class="post-copyright-info">
+                    <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> Java RMI</li>
+        <li><strong>Author:</strong> P3ngu1nW</li>
+        <li><strong>Created at:</strong> 2023-07-25 13:47:27</li>
+        
+            <li>
+                <strong>Updated at:</strong> 2023-07-25 21:46:00
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://p3ngu1nw.github.io/2023/07/25/Java-RMI/
+        </li>
+        <li>
+            <strong>License:</strong> This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.
+        </li>
+    </ul>
+</div>
+
+                </div>
+            
+
+            
+                <ul class="post-tags-box">
+                    
+                        <li class="tag-item">
+                            <a href="/tags/Java/">#Java</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            
+
+            
+
+            
+                <div class="article-nav">
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                            rel="next"
+                            href="/2023/07/25/Java-RPC/"
+                            >
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">Java RPC</span>
+                                    <span class="post-nav-item">Next posts</span>
+                                </span>
+                                <span class="right arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
+
+
+            
+                <div class="comment-container">
+                    <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-pjax>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'en-US',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+                </div>
+            
+        </div>
+
+        
+            <div class="toc-content-container">
+                <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">Java RMI</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-RMI"><span class="nav-text">Java-RMI</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Procedure"><span class="nav-text">Procedure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-Analysing"><span class="nav-text">Code Analysing</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DEMO"><span class="nav-text">DEMO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-RemoteObj"><span class="nav-text">Create a RemoteObj</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Register-the-RemoteObj"><span class="nav-text">Register the RemoteObj</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Visit-Registry-to-fetch-the-RemoteObj"><span class="nav-text">Visit Registry to fetch the RemoteObj</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Call-Remote-Method"><span class="nav-text">Call Remote Method</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DGC"><span class="nav-text">DGC</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Summary"><span class="nav-text">Summary</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Registry-attack-Client"><span class="nav-text">Registry attack Client</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Server-attack-Client"><span class="nav-text">Server attack Client</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Client-attack-Server"><span class="nav-text">Client attack Server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Client-attack-Registry"><span class="nav-text">Client attack Registry</span></a></li></ol></li></ol></li></ol>
+
+    </div>
+</div>
+            </div>
+        
+    </div>
+</div>
+
+
+                
+
+            </div>
+            
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">P3ngu1nW</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv" class="busuanzi_container_site_uv">
+                        VISITOR COUNT&nbsp;<span id="busuanzi_value_site_uv" class="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="busuanzi_container_site_pv">
+                        TOTAL PAGE VIEWS&nbsp;<span id="busuanzi_value_site_pv" class="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            <span class="powered-by-container">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" href="https://hexo.io">Hexo</a></span>
+                <br>
+            <span class="theme-version-container">THEME&nbsp;<a class="theme-version" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.1.3</a>
+        </div>
+        
+        
+        
+            <div id="start_div" style="display:none">
+                2022/8/17 11:45:14
+            </div>
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+        
+            <script async data-pjax>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/layouts/navbarShrink.js"></script>
+
+<script src="/js/tools/scrollTopBottom.js"></script>
+
+<script src="/js/tools/lightDarkSwitch.js"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/layouts/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+
+<div class="post-scripts pjax">
+    
+        
+<script src="/js/tools/tocToggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/layouts/toc.js"></script>
+
+<script src="/js/plugins/tabs.js"></script>
+
+    
+</div>
+
+
+    
+<script src="/js/libs/pjax.min.js"></script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax',
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            Global.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            Global.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            Global.refresh();
+        });
+    });
+</script>
+
+
+
+
+</body>
+</html>
