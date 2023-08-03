@@ -13,15 +13,15 @@
 <meta property="og:site_name" content="P3ngu1nW">
 <meta property="og:description" content="Tomcat ArchitectureThree major components of Java WebWhen the Tomcat receive a request, the request will pass Listener -&gt; Filter -&gt; Servlet orderly. ServletServlet is a program that is used to h">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2023/07/13/Tomcat-Architecture/07/13/Tomcat-Architecture/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_30,g_se,x_10,y_10,shadow_20,type_ZmFuZ3poZW5naGVpdGk=.png">
-<meta property="og:image" content="http://example.com/2023/07/13/Tomcat-Architecture/07/13/Tomcat-Architecture/TomcatConnector.png">
-<meta property="og:image" content="http://example.com/2023/07/13/Tomcat-Architecture/07/13/Tomcat-Architecture/TomcatContainer.png">
+<meta property="og:image" content="http://example.com/2023/07/13/Tomcat-Architecture/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_30,g_se,x_10,y_10,shadow_20,type_ZmFuZ3poZW5naGVpdGk=.png">
+<meta property="og:image" content="http://example.com/2023/07/13/Tomcat-Architecture/TomcatConnector.png">
+<meta property="og:image" content="http://example.com/2023/07/13/Tomcat-Architecture/TomcatContainer.png">
 <meta property="article:published_time" content="2023-07-13T07:24:09.000Z">
 <meta property="article:modified_time" content="2023-07-14T09:48:52.646Z">
 <meta property="article:author" content="P3ngu1nW">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2023/07/13/Tomcat-Architecture/07/13/Tomcat-Architecture/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_30,g_se,x_10,y_10,shadow_20,type_ZmFuZ3poZW5naGVpdGk=.png">
+<meta name="twitter:image" content="http://example.com/2023/07/13/Tomcat-Architecture/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_30,g_se,x_10,y_10,shadow_20,type_ZmFuZ3poZW5naGVpdGk=.png">
     
     
       
@@ -191,7 +191,7 @@
 <h2 id="Apache-and-Tomcat"><a href="#Apache-and-Tomcat" class="headerlink" title="Apache and Tomcat"></a>Apache and Tomcat</h2><p>Apache is used to deal with the static resource and forward the request of dynamic resource.</p>
 <p>Tomcat is a servlet container, like an extension of the Apache, but it can run independent of Apache.</p>
 <p>There is a vivid metaphor that the Apache is like a truck, it can carry some stuff(e.g. html) directly, but it can’t carry the water(e.g. servlet) directly. The water should be stored in a container, and.the container is Tomcat.</p>
-<h2 id="Tomcat-Architecture-1"><a href="#Tomcat-Architecture-1" class="headerlink" title="Tomcat Architecture"></a>Tomcat Architecture</h2><img src="/2023/07/13/Tomcat-Architecture/07/13/Tomcat-Architecture/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_30,g_se,x_10,y_10,shadow_20,type_ZmFuZ3poZW5naGVpdGk=.png" class title="img">
+<h2 id="Tomcat-Architecture-1"><a href="#Tomcat-Architecture-1" class="headerlink" title="Tomcat Architecture"></a>Tomcat Architecture</h2><img src="/2023/07/13/Tomcat-Architecture/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_30,g_se,x_10,y_10,shadow_20,type_ZmFuZ3poZW5naGVpdGk=.png" class title="img">
 
 <p>Generally, there are four components in Tomcat, that is, Server, Service, Connector, Container.</p>
 <p>Tow major components are: Connector and Container.</p>
@@ -199,10 +199,10 @@
 <h3 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h3><p>A Service is a group of one or more Connectors that share a single Container to process their incoming requests. This arrangement allows, for example, a non-SSL and SSL connector to share the same population of web apps.</p>
 <p>The standard implementation class for the Service interface in Tomcat is StandardService, which not only implements the Service interface but also the Lifecycle interface, allowing it to control the lifecycle of its underlying components</p>
 <h3 id="Connector"><a href="#Connector" class="headerlink" title="Connector"></a>Connector</h3><p>It is used to receive TCP connection requests from the browser, create a Request and Response object for exchanging data with the user, and then generate a thread to process the request and pass the generated Request and Response object to the thread(container) processing the request.</p>
-<img src="/2023/07/13/Tomcat-Architecture/07/13/Tomcat-Architecture/TomcatConnector.png" class title="img">
+<img src="/2023/07/13/Tomcat-Architecture/TomcatConnector.png" class title="img">
 
 <h3 id="Container"><a href="#Container" class="headerlink" title="Container"></a>Container</h3><p>Container(also called Catalina) is used to handle servlet connection requests sent by the connector. It has four sub container, that is, Engine, Host, Context, Wrapper.</p>
-<img src="/2023/07/13/Tomcat-Architecture/07/13/Tomcat-Architecture/TomcatContainer.png" class title="img">
+<img src="/2023/07/13/Tomcat-Architecture/TomcatContainer.png" class title="img">
 
 <h4 id="Engine"><a href="#Engine" class="headerlink" title="Engine"></a>Engine</h4><p>An Engine is a Container that represents the entire Catalina servlet engine.</p>
 <h4 id="Host"><a href="#Host" class="headerlink" title="Host"></a>Host</h4><p>A Host is a Container that represents a virtual host in the Catalina servlet engine.</p>
